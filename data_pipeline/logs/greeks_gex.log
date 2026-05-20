@@ -1,0 +1,36 @@
+2026-05-12 20:07:43,850  INFO  Greeks tables ready
+2026-05-12 20:07:43,850  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 20:07:44,170  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 20:07:44,172  INFO  Done.
+2026-05-12 20:16:57,305  INFO  Greeks tables ready
+2026-05-12 20:16:57,305  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 20:16:57,326  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 20:16:57,327  INFO  Done.
+2026-05-12 20:50:48,690  INFO  Greeks tables ready
+2026-05-12 20:50:48,690  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 20:50:48,796  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 20:50:48,798  INFO  Done.
+2026-05-12 21:24:32,915  INFO  Greeks tables ready
+2026-05-12 21:24:32,915  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 21:24:33,010  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 21:24:33,011  INFO  Done.
+2026-05-12 21:42:14,395  INFO  Greeks tables ready
+2026-05-12 21:42:14,401  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 21:42:14,488  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 21:42:14,489  INFO  Done.
+2026-05-12 23:33:22,564  INFO  Greeks tables ready
+2026-05-12 23:33:22,577  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-12 23:33:22,811  INFO  Incremental update complete. Processed 0 contract-days.
+2026-05-12 23:33:22,813  INFO  Done.
+2026-05-13 00:46:40,611  INFO  Greeks tables ready
+2026-05-13 00:46:40,624  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-13 00:46:43,026  INFO  Computed Greeks for 2026-05-12: 1990 contracts
+2026-05-13 00:46:43,027  INFO  Incremental update complete. Processed 1990 contract-days.
+2026-05-13 00:46:43,039  INFO  Done.
+2026-05-17 13:38:11,927  INFO  Greeks tables ready
+2026-05-17 13:38:11,939  INFO  Running incremental Greeks update (last 7 days)...
+2026-05-17 13:38:15,785  INFO  Computed Greeks for 2026-05-13: 1912 contracts
+2026-05-17 13:38:20,048  INFO  Computed Greeks for 2026-05-14: 1950 contracts
+2026-05-17 13:38:24,669  INFO  Computed Greeks for 2026-05-15: 1950 contracts
+2026-05-17 13:38:24,670  INFO  Incremental update complete. Processed 5812 contract-days.
+2026-05-17 13:38:24,705  INFO  Done.

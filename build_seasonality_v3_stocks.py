@@ -1,0 +1,301 @@
+# -*- coding: utf-8 -*-
+"""
+build_seasonality_v3_stocks.py
+Mines seasonality_patterns_v3 for ALL NSE stocks from stock_data table.
+
+Usage:
+  py build_seasonality_v3_stocks.py --sym AXISBANK   test one symbol
+  py build_seasonality_v3_stocks.py                  full overnight build
+  py build_seasonality_v3_stocks.py --resume         resume from checkpoint
+  py build_seasonality_v3_stocks.py --verify         show current counts
+"""
+
+import sys, json, time, math, sqlite3, bisect, warnings
+from pathlib import Path
+from datetime import datetime, date
+warnings.filterwarnings("ignore")
+
+try:
+    import numpy as np
+    import pandas as pd
+    from scipy import stats as scipy_stats
+    HAS_SCIPY = True
+except ImportError:
+    import numpy as np
+    import pandas as pd
+    HAS_SCIPY = False
+
+DB_PATH      = Path(r"D:\marketDB\db\market.db")
+CKPT         = Path(r"D:\MICC\seasonality_stocks_checkpoint.json")
+WIN_MIN      = 3
+WIN_MAX      = 60
+WINDOWS      = list(range(WIN_MIN, WIN_MAX + 1))
+MIN_OBS      = 5
+MIN_ACCURACY = 55.0
+MIN_SCORE    = 0.3
+COMMIT_EVERY = 2000
+LOG_EVERY    = 20
+
+R=chr(27)+"[0m"; B=chr(27)+"[1m"; G=chr(27)+"[92m"
+Y=chr(27)+"[93m"; RD=chr(27)+"[91m"; C=chr(27)+"[96m"; D=chr(27)+"[2m"
+
+def ts(): return datetime.now().strftime("%H:%M:%S")
+def hms(s):
+    h=int(s//3600); m=int((s%3600)//60); sc=int(s%60)
+    return f"{h}h{m:02d}m{sc:02d}s" if h else f"{m}m{sc:02d}s"
+def pbar(done,total,w=26):
+    f=int(w*done/max(total,1))
+    return "["+chr(9608)*f+chr(9617)*(w-f)+f"] {100*done/max(total,1):5.1f}%"
+def log(msg,lvl="INFO"):
+    clr={"OK":G+" OK "+R,"FAIL":RD+"FAIL"+R,"WARN":Y+"WARN"+R}.get(lvl,C+"INFO"+R)
+    print(f"  [{ts()}] [{clr}]  {msg}",flush=True)
+
+
+def get_conn():
+    c = sqlite3.connect(DB_PATH, timeout=120)
+    c.execute("PRAGMA journal_mode=WAL")
+    c.execute("PRAGMA synchronous=NORMAL")
+    c.execute("PRAGMA cache_size=-131072")
+    c.execute("PRAGMA temp_store=MEMORY")
+    c.execute("PRAGMA busy_timeout=30000")
+    c.execute("PRAGMA read_uncommitted=1")
+    return c
+
+
+def get_all_symbols(conn):
+    rows = conn.execute(
+        "SELECT symbol FROM ("
+        "  SELECT symbol, COUNT(*) as n FROM stock_data"
+        "  WHERE close IS NOT NULL AND close > 0"
+        "  GROUP BY symbol HAVING n >= 1250"
+        ") ORDER BY symbol"
+    ).fetchall()
+    return [r[0] for r in rows]
+
+
+def load_prices(conn, symbol):
+    rows = conn.execute(
+        "SELECT date, close FROM stock_data"
+        " WHERE symbol=? AND close IS NOT NULL AND close > 0"
+        " ORDER BY date",
+        (symbol,)
+    ).fetchall()
+    if len(rows) < 300:
+        return None
+    idx    = pd.to_datetime([r[0] for r in rows])
+    vals   = [float(r[1]) for r in rows]
+    series = pd.Series(vals, index=idx).sort_index()
+    return series[series > 0] if len(series) >= 300 else None
+
+
+def get_anchors():
+    out = []
+    for mo in range(1,13):
+        for dy in range(1,32):
+            try:
+                date(2000,mo,dy)
+                if not (mo==2 and dy==29): out.append(f"{mo:02d}-{dy:02d}")
+            except ValueError: pass
+    return out
+
+
+def mine(prices, anchor, window, dates_arr, price_map):
+    mm,dd = int(anchor[:2]),int(anchor[3:])
+    yrets = {}
+    for yr in sorted(set(d.year for d in dates_arr)):
+        try: tgt = date(yr,mm,dd)
+        except ValueError: continue
+        bi = bisect.bisect_left(dates_arr, pd.Timestamp(tgt))
+        ed = None
+        for k in range(bi, min(bi+5,len(dates_arr))):
+            if dates_arr[k].year == yr: ed=dates_arr[k]; break
+        if ed is None: continue
+        ep = price_map.get(ed)
+        if not ep or ep<=0: continue
+        xi = bisect.bisect_left(dates_arr,ed)+window
+        if xi>=len(dates_arr): continue
+        xp = price_map.get(dates_arr[xi])
+        if not xp or xp<=0: continue
+        yrets[yr] = round((xp/ep-1)*100, 4)
+    if len(yrets)<MIN_OBS: return None
+    arr  = np.array(list(yrets.values()),dtype=float)
+    n    = len(arr)
+    mean = float(np.mean(arr))
+    dirn = "UP" if mean>=0 else "DOWN"
+    acc  = float((np.mean(arr>0) if dirn=="UP" else np.mean(arr<0))*100)
+    if acc<MIN_ACCURACY: return None
+    std  = float(np.std(arr,ddof=1)) if n>1 else 0.0
+    scr  = round(acc*abs(mean)*math.log(max(n,2))/100, 4)
+    if scr<MIN_SCORE: return None
+    med  = float(np.median(arr))
+    p10,p25,p75,p90 = (float(np.percentile(arr,p)) for p in (10,25,75,90))
+    bst,wst = float(arr.max()),float(arr.min())
+    cons = round(max(0.0,min(1.0,1-std/(abs(mean)+1e-9))),4)
+    edge = round(abs(mean)/(abs(wst)+1e-9),4)
+    if n>1 and std>0:
+        tst = float(mean/(std/math.sqrt(n)))
+        pv  = float(scipy_stats.t.sf(abs(tst),df=n-1)*2) if HAS_SCIPY else float(min(1.0,2/(1+abs(tst)*math.sqrt(n))))
+    else: tst=0.0; pv=1.0
+    half=n//2
+    if half>=3:
+        ea=float((np.mean(arr[:half]>0) if dirn=="UP" else np.mean(arr[:half]<0))*100)
+        ra=float((np.mean(arr[half:]>0) if dirn=="UP" else np.mean(arr[half:]<0))*100)
+        deg=round(ra-ea,2)
+    else: ea=ra=acc; deg=0.0
+    ylist=sorted(yrets.keys())
+    rmean=float(np.mean([yrets[y] for y in ylist if y>=max(ylist)-5]))
+    srt=sorted(yrets.items(),key=lambda x:x[1],reverse=True)
+    return (anchor,window,dirn,n,
+            round(acc,2),round(mean,4),round(med,4),round(std,4),
+            round(p10,4),round(p25,4),round(p75,4),round(p90,4),
+            round(bst,4),round(wst,4),scr,cons,round(edge,4),
+            round(tst,4),round(pv,6),round(ea,2),round(ra,2),deg,
+            round(rmean,4),round(rmean-mean,4),
+            json.dumps([{"year":y,"ret":round(r,3)} for y,r in srt[:5]]),
+            json.dumps([{"year":y,"ret":round(r,3)} for y,r in srt[-5:]]),
+            json.dumps([{"year":y,"ret":round(yrets[y],3)} for y in ylist]))
+
+
+SQL = """INSERT OR REPLACE INTO seasonality_patterns_v3
+  (symbol,anchor_mm_dd,window_days,direction,n_obs,
+   accuracy,mean_ret,median_ret,std_ret,p10,p25,p75,p90,
+   best_ret,worst_ret,score,consistency,edge_ratio,
+   t_stat,p_value,early_accuracy,recent_accuracy,
+   degradation,recent_mean,recent_vs_all,
+   best_years,worst_years,all_returns)
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"""
+
+
+def process(conn, symbol, prices, verbose=False):
+    prices    = prices.sort_index()
+    pm        = prices.to_dict()
+    da        = sorted(prices.index)
+    anchors   = get_anchors()
+    batch     = []
+    inserted  = 0
+    for anchor in anchors:
+        for win in WINDOWS:
+            try: result = mine(prices,anchor,win,da,pm)
+            except Exception: continue
+            if result is None: continue
+            batch.append((symbol,)+result)
+            if len(batch)>=COMMIT_EVERY:
+                _commit(conn,batch); inserted+=len(batch); batch=[]
+    if batch:
+        _commit(conn,batch); inserted+=len(batch)
+    if verbose:
+        log(f"{symbol}: {inserted} patterns written", "OK")
+    return inserted
+
+
+def _commit(conn,rows):
+    for attempt in range(8):
+        try:
+            conn.executemany(SQL,rows)
+            conn.commit()
+            return
+        except sqlite3.OperationalError as e:
+            if "locked" in str(e).lower() and attempt<7: time.sleep(5+attempt*3)
+            else: raise
+
+
+def save_ckpt(done): CKPT.write_text(json.dumps({"done":list(done)}))
+def load_ckpt():
+    if not CKPT.exists(): return set()
+    try: return set(json.loads(CKPT.read_text()).get("done",[]))
+    except: return set()
+
+
+def run_single(symbol):
+    """Run for one symbol, always ignores checkpoint."""
+    print(f"\n{B}Testing: {symbol}{R}")
+    conn = get_conn()
+    prices = load_prices(conn, symbol)
+    if prices is None:
+        log(f"{symbol}: not enough data in stock_data (need 300+ rows)", "FAIL")
+        conn.close(); return
+    log(f"{symbol}: {len(prices)} price rows, {prices.index[0].date()} to {prices.index[-1].date()}")
+    n = process(conn, symbol, prices, verbose=True)
+    total = conn.execute("SELECT COUNT(*) FROM seasonality_patterns_v3").fetchone()[0]
+    log(f"DB total patterns: {total:,}")
+    # Show top 5 for this symbol
+    top = conn.execute(
+        "SELECT anchor_mm_dd,window_days,direction,accuracy,mean_ret,score"
+        " FROM seasonality_patterns_v3 WHERE symbol=?"
+        " ORDER BY score DESC LIMIT 5",
+        (symbol,)
+    ).fetchall()
+    print(f"  Top patterns for {symbol}:")
+    for r in top:
+        d=G if r[2]=="UP" else RD
+        print(f"    {r[0]} {r[1]:>3}d {d}{r[2]:<5}{R} acc={r[3]:.1f}% mean={r[4]:+.2f}% score={r[5]:.2f}")
+    conn.close()
+
+
+def run_full(resume=False):
+    print(f"\n{B}{C}Seasonality Miner v3 -- NSE Stocks{R}")
+    print(f"  Windows : {WIN_MIN}d-{WIN_MAX}d ({len(WINDOWS)} windows)")
+    print(f"  DB      : {DB_PATH}\n")
+    conn     = get_conn()
+    all_syms = get_all_symbols(conn)
+    log(f"Symbols with >=1250 rows: {len(all_syms):,}")
+    done     = load_ckpt() if resume else set()
+    todo     = [s for s in all_syms if s not in done]
+    if resume: log(f"Resuming: {len(done)} done, {len(todo)} remaining")
+    t0=time.time(); dc=0; tp=0; fc=0; dl=list(done)
+    for idx,sym in enumerate(todo,1):
+        el=time.time()-t0; sp=dc/max(el,1)
+        eta=(len(todo)-idx)/max(sp,1e-9)
+        sl=str(sym)[:15]
+        print(f"\r  {pbar(idx,len(todo))} {G}{sl:<15}{R}  ETA {hms(eta)}  pats={tp:,}  ",end="",flush=True)
+        try: prices=load_prices(conn,sym)
+        except Exception as e:
+            print(); log(f"{sym}: load err {str(e)[:50]}","FAIL"); fc+=1; continue
+        if prices is None: dl.append(sym); done.add(sym); dc+=1; continue
+        try: n=process(conn,sym,prices)
+        except Exception as e:
+            print(); log(f"{sym}: mine err {str(e)[:80]}","FAIL"); fc+=1; continue
+        tp+=n; dl.append(sym); done.add(sym); dc+=1
+        if dc%100==0: save_ckpt(done)
+        if dc%LOG_EVERY==0:
+            print()
+            db_n=conn.execute("SELECT COUNT(*) FROM seasonality_patterns_v3").fetchone()[0]
+            log(f"Progress {dc}/{len(todo)}  DB:{db_n:,}  Elapsed:{hms(el)}")
+    print()
+    save_ckpt(done)
+    db_n=conn.execute("SELECT COUNT(*) FROM seasonality_patterns_v3").fetchone()[0]
+    conn.close()
+    el=time.time()-t0
+    print(f"\n{B}DONE{R}  processed={dc}  failed={fc}  total_db={db_n:,}  time={hms(el)}")
+
+
+if __name__=="__main__":
+    import argparse
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--sym")
+    ap.add_argument("--resume",action="store_true")
+    ap.add_argument("--verify",action="store_true")
+    args=ap.parse_args()
+    if args.verify:
+        conn=get_conn()
+        tot=conn.execute("SELECT COUNT(*) FROM seasonality_patterns_v3").fetchone()[0]
+        syms=conn.execute("SELECT COUNT(DISTINCT symbol) FROM seasonality_patterns_v3").fetchone()[0]
+        print(f"  Patterns: {tot:,}  Symbols: {syms:,}")
+        top=conn.execute(
+            "SELECT symbol,COUNT(*) as n FROM seasonality_patterns_v3"
+            " GROUP BY symbol ORDER BY n DESC LIMIT 15"
+        ).fetchall()
+        for s,n in top: print(f"    {s:<22} {n:>7,}")
+        conn.close()
+    elif args.sym:
+        # Delete existing patterns for this symbol first so we see fresh results
+        conn=get_conn()
+        deleted=conn.execute(
+            "DELETE FROM seasonality_patterns_v3 WHERE symbol=?",
+            (args.sym.upper(),)
+        ).rowcount
+        conn.commit(); conn.close()
+        if deleted: print(f"  Cleared {deleted} existing patterns for {args.sym}")
+        run_single(args.sym.upper())
+    else:
+        run_full(resume=args.resume)

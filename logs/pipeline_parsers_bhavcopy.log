@@ -1,0 +1,340 @@
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_01042026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,156 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,156 → 2,545 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,545 rows | symbols: 2,545
+2026-05-05 21:59:43 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_02042026.csv
+2026-05-05 21:59:43 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,150 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 21:59:43 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,150 → 2,550 rows
+2026-05-05 21:59:43 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,550 rows | symbols: 2,550
+2026-05-05 22:00:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_06042026.csv
+2026-05-05 22:00:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,172 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:00:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,172 → 2,558 rows
+2026-05-05 22:00:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,558 rows | symbols: 2,558
+2026-05-05 22:00:54 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_07042026.csv
+2026-05-05 22:00:54 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,155 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:00:54 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,155 → 2,552 rows
+2026-05-05 22:00:54 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,552 rows | symbols: 2,552
+2026-05-05 22:01:29 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_08042026.csv
+2026-05-05 22:01:29 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,199 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:01:29 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,199 → 2,549 rows
+2026-05-05 22:01:29 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,549 rows | symbols: 2,549
+2026-05-05 22:02:04 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_09042026.csv
+2026-05-05 22:02:04 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,145 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:02:04 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,145 → 2,551 rows
+2026-05-05 22:02:04 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,551 rows | symbols: 2,551
+2026-05-05 22:02:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_10042026.csv
+2026-05-05 22:02:38 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,164 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:02:38 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,164 → 2,548 rows
+2026-05-05 22:02:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:03:24 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_13042026.csv
+2026-05-05 22:03:24 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,155 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:03:24 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,155 → 2,558 rows
+2026-05-05 22:03:24 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,558 rows | symbols: 2,558
+2026-05-05 22:04:23 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_15042026.csv
+2026-05-05 22:04:23 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,173 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:04:23 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,173 → 2,549 rows
+2026-05-05 22:04:23 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,549 rows | symbols: 2,549
+2026-05-05 22:05:37 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_16042026.csv
+2026-05-05 22:05:37 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,156 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:05:37 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,156 → 2,548 rows
+2026-05-05 22:05:37 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:06:51 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_17042026.csv
+2026-05-05 22:06:51 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,168 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:06:51 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,168 → 2,548 rows
+2026-05-05 22:06:51 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:08:05 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_18032026.csv
+2026-05-05 22:08:05 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,161 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:08:05 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,161 → 2,534 rows
+2026-05-05 22:08:06 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,534 rows | symbols: 2,534
+2026-05-05 22:08:58 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_19032026.csv
+2026-05-05 22:08:58 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,144 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:08:58 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,144 → 2,535 rows
+2026-05-05 22:08:58 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,535 rows | symbols: 2,535
+2026-05-05 22:09:41 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20032026.csv
+2026-05-05 22:09:41 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,165 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:09:41 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,165 → 2,534 rows
+2026-05-05 22:09:41 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,534 rows | symbols: 2,534
+2026-05-05 22:10:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20042026 (1).csv
+2026-05-05 22:10:35 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,263 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:10:35 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,263 → 2,657 rows
+2026-05-05 22:10:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,657 rows | symbols: 2,657
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_01042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,156 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,156 → 2,545 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,545 rows | symbols: 2,545
+2026-05-05 22:12:37 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_02042026.csv
+2026-05-05 22:12:37 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,150 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:12:37 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,150 → 2,550 rows
+2026-05-05 22:12:37 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,550 rows | symbols: 2,550
+2026-05-05 22:13:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_06042026.csv
+2026-05-05 22:13:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,172 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:13:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,172 → 2,558 rows
+2026-05-05 22:13:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,558 rows | symbols: 2,558
+2026-05-05 22:13:56 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_07042026.csv
+2026-05-05 22:13:56 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,155 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:13:56 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,155 → 2,552 rows
+2026-05-05 22:13:56 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,552 rows | symbols: 2,552
+2026-05-05 22:14:36 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_08042026.csv
+2026-05-05 22:14:36 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,199 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:14:36 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,199 → 2,549 rows
+2026-05-05 22:14:37 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,549 rows | symbols: 2,549
+2026-05-05 22:15:33 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_09042026.csv
+2026-05-05 22:15:33 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,145 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:15:33 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,145 → 2,551 rows
+2026-05-05 22:15:33 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,551 rows | symbols: 2,551
+2026-05-05 22:16:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_10042026.csv
+2026-05-05 22:16:38 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,164 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:16:38 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,164 → 2,548 rows
+2026-05-05 22:16:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:17:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_13042026.csv
+2026-05-05 22:17:35 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,155 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:17:35 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,155 → 2,558 rows
+2026-05-05 22:17:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,558 rows | symbols: 2,558
+2026-05-05 22:18:19 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_15042026.csv
+2026-05-05 22:18:19 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,173 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:18:19 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,173 → 2,549 rows
+2026-05-05 22:18:20 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,549 rows | symbols: 2,549
+2026-05-05 22:19:00 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_16042026.csv
+2026-05-05 22:19:00 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,156 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:19:00 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,156 → 2,548 rows
+2026-05-05 22:19:00 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:19:40 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_17042026.csv
+2026-05-05 22:19:40 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,168 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:19:40 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,168 → 2,548 rows
+2026-05-05 22:19:41 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,548 rows | symbols: 2,548
+2026-05-05 22:20:25 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_18032026.csv
+2026-05-05 22:20:25 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,161 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:20:25 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,161 → 2,534 rows
+2026-05-05 22:20:25 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,534 rows | symbols: 2,534
+2026-05-05 22:21:01 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_19032026.csv
+2026-05-05 22:21:01 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,144 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:21:01 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,144 → 2,535 rows
+2026-05-05 22:21:01 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,535 rows | symbols: 2,535
+2026-05-05 22:21:36 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20032026.csv
+2026-05-05 22:21:36 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,165 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:21:36 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,165 → 2,534 rows
+2026-05-05 22:21:36 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,534 rows | symbols: 2,534
+2026-05-05 22:22:11 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20042026 (1).csv
+2026-05-05 22:22:11 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,263 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:22:11 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,263 → 2,657 rows
+2026-05-05 22:22:11 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,657 rows | symbols: 2,657
+2026-05-05 22:22:48 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20042026 (2).csv
+2026-05-05 22:22:48 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,263 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:22:48 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,263 → 2,657 rows
+2026-05-05 22:22:48 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,657 rows | symbols: 2,657
+2026-05-05 22:23:26 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20042026 (3).csv
+2026-05-05 22:23:26 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,263 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:23:26 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,263 → 2,657 rows
+2026-05-05 22:23:26 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,657 rows | symbols: 2,657
+2026-05-05 22:24:31 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_20042026.csv
+2026-05-05 22:24:31 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,263 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:24:31 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,263 → 2,657 rows
+2026-05-05 22:24:31 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,657 rows | symbols: 2,657
+2026-05-05 22:25:45 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_21042026.csv
+2026-05-05 22:25:45 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,259 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:25:45 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,259 → 2,654 rows
+2026-05-05 22:25:46 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:26:46 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_22042026 (1).csv
+2026-05-05 22:26:46 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,234 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:26:46 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,234 → 2,654 rows
+2026-05-05 22:26:46 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:27:50 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_22042026 (2).csv
+2026-05-05 22:27:50 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,234 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:27:50 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,234 → 2,654 rows
+2026-05-05 22:27:50 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:29:21 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_22042026 (3).csv
+2026-05-05 22:29:21 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,234 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:29:21 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,234 → 2,654 rows
+2026-05-05 22:29:21 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:30:23 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_22042026 (4).csv
+2026-05-05 22:30:24 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,234 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:30:24 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,234 → 2,654 rows
+2026-05-05 22:30:24 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:31:27 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_22042026.csv
+2026-05-05 22:31:27 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,234 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:31:27 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,234 → 2,654 rows
+2026-05-05 22:31:28 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:32:31 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_23032026.csv
+2026-05-05 22:32:31 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,211 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:32:31 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,211 → 2,544 rows
+2026-05-05 22:32:31 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,544 rows | symbols: 2,544
+2026-05-05 22:34:09 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_23042026.csv
+2026-05-05 22:34:09 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,239 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:34:09 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,239 → 2,655 rows
+2026-05-05 22:34:09 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,655 rows | symbols: 2,655
+2026-05-05 22:35:14 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_24032026.csv
+2026-05-05 22:35:14 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,187 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:35:14 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,187 → 2,537 rows
+2026-05-05 22:35:14 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,537 rows | symbols: 2,537
+2026-05-05 22:36:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_24042026.csv
+2026-05-05 22:36:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,243 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:36:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,243 → 2,652 rows
+2026-05-05 22:36:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,652 rows | symbols: 2,652
+2026-05-05 22:37:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_25032026.csv
+2026-05-05 22:37:35 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,190 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:37:35 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,190 → 2,538 rows
+2026-05-05 22:37:35 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,538 rows | symbols: 2,538
+2026-05-05 22:39:22 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_27032026.csv
+2026-05-05 22:39:22 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,203 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:39:22 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,203 → 2,543 rows
+2026-05-05 22:39:22 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,543 rows | symbols: 2,543
+2026-05-05 22:40:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_27042026.csv
+2026-05-05 22:40:38 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,265 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:40:38 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,265 → 2,663 rows
+2026-05-05 22:40:38 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,663 rows | symbols: 2,663
+2026-05-05 22:41:42 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_28042026.csv
+2026-05-05 22:41:42 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,227 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:41:42 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,227 → 2,654 rows
+2026-05-05 22:41:43 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,654 rows | symbols: 2,654
+2026-05-05 22:42:59 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_29042026.csv
+2026-05-05 22:42:59 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,226 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:42:59 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,226 → 2,651 rows
+2026-05-05 22:42:59 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,651 rows | symbols: 2,651
+2026-05-05 22:44:03 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sec_bhavdata_full_30032026.csv
+2026-05-05 22:44:03 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 3,228 | columns: ['SYMBOL', ' SERIES', ' DATE1', ' PREV_CLOSE', ' OPEN_PRICE', ' HIGH_PRICE', ' LOW_PRICE', ' LAST_PRICE', ' CLOSE_PRICE', ' AVG_PRICE', ' TTL_TRD_QNTY', ' TURNOVER_LACS', ' NO_OF_TRADES', ' DELIV_QTY', ' DELIV_PER']
+2026-05-05 22:44:03 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 3,228 → 2,552 rows
+2026-05-05 22:44:04 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 2,552 rows | symbols: 2,552
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme01042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme01042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 469 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 469 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme02042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme02042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 450 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 450 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme06042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme06042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 453 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 453 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme07042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme07042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 454 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 454 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme08042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme08042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 490 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 490 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme09042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme09042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 448 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 448 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme10042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme10042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 467 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 467 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme13042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme13042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 447 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 447 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme15042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme15042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 475 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 475 → 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme16042026.csv
+2026-05-05 22:45:17 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme16042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 469 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 469 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme17042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme17042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 470 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 470 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme20042026 (1).csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme20042026 (1).csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 442 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 442 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme20042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme20042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 442 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 442 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme21042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme21042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 449 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 449 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme22042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme22042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 445 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 445 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme23032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme23032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 488 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 488 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme23042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme23042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 436 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 436 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme24032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme24032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 490 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 490 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme24042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme24042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 442 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 442 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme25032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme25032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 496 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 496 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme27032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme27032026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 496 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 496 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme27042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme27042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 450 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 450 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme28042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme28042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 443 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 443 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser: sme29042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser: sme29042026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Raw rows: 438 | columns: ['MARKET', 'SERIES', 'SYMBOL', 'SECURITY', 'PREV_CL_PR', 'OPEN_PRICE', 'HIGH_PRICE', 'LOW_PRICE', 'CLOSE_PRICE', 'NET_TRDVAL', 'NET_TRDQTY', 'CORP_IND', 'HI_52_WK', 'LO_52_WK']
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | Series filter (['EQ', 'BE']): 438 → 0 rows
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | FullBhavCopyParser result: 0 rows | symbols: 0
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.bhavcopy | SMEBhavCopyParser result: 0 rows

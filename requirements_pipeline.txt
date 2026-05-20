@@ -1,0 +1,34 @@
+# MICC Data Pipeline — Python Dependencies
+# ==========================================
+# Location: D:\MICC\data_pipeline\requirements_pipeline.txt
+#
+# Install from D:\MICC\data_pipeline\:
+#   py -m pip install -r requirements_pipeline.txt
+#
+# Note: On Python 3.14 if you see "externally managed" errors, add:
+#   --break-system-packages
+#
+# sqlite3 is built into Python — no separate install needed.
+
+# ── Core Data ──────────────────────────────────────────────────────────────────
+pandas>=2.2.0
+numpy>=1.26.0
+pyarrow>=15.0.0          # Parquet read/write (primary stock store)
+scipy>=1.13.0            # Black-Scholes Greeks (phase2_greeks_calculator.py)
+
+# ── Market Data Sources ────────────────────────────────────────────────────────
+yfinance>=0.2.40         # Yahoo Finance — stocks, indices, global macro
+nselib>=0.4.0            # NSE delivery bhavcopy (update_delivery.py)
+nsefin>=0.1.0            # NSE corporate announcements + insider trading
+fredapi>=0.5.2           # FRED — US macro + India macro series
+
+# ── Web / HTTP / Selenium ──────────────────────────────────────────────────────
+requests>=2.32.0         # HTTP calls to NSE APIs
+selenium>=4.20.0         # Headless Chrome for NSE session cookies
+webdriver-manager>=4.0.0 # Auto-manages ChromeDriver binary
+certifi>=2024.2.2        # SSL certificate bundle (fixes broken GDAL cert paths)
+
+# ── Utilities ──────────────────────────────────────────────────────────────────
+tqdm>=4.66.0             # Progress bars in long-running scripts
+python-dateutil>=2.9.0   # Robust date parsing
+tenacity>=8.3.0          # @retry decorator for flaky network calls

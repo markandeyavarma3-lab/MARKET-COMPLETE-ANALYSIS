@@ -1,0 +1,27 @@
+
+HOW TO INTEGRATE RefreshController into page.tsx
+=================================================
+
+1. Import at top of page.tsx:
+   import RefreshController from "@/components/RefreshController";
+
+2. Create a triggerRefresh function that calls all your data-fetch hooks:
+   const triggerRefresh = useCallback(async () => {
+     await Promise.all([
+       fetchAlpha(),
+       fetchBeta(),
+       fetchGamma(),
+       fetchDelta(),
+       fetchIndices(),
+       fetchStreak(),
+     ]);
+   }, [fetchAlpha, fetchBeta, fetchGamma, fetchDelta, fetchIndices, fetchStreak]);
+
+3. Add to header JSX (in .header-right div):
+   <RefreshController onRefresh={triggerRefresh} intervalSec={90} />
+
+4. Remove the old setInterval / useEffect refresh logic.
+
+NOTE: Each fetch function must return a Promise.
+If using SWR or React Query, pass mutate() functions.
+If using useState + fetch, wrap each in an async function that returns the fetch Promise.

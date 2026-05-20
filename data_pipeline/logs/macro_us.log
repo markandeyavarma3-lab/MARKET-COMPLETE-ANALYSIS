@@ -1,0 +1,171 @@
+2026-05-12 20:48:18,958  INFO  ======================================================================
+2026-05-12 20:48:18,959  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-12 20:48:18,961  INFO  US macro table ready
+2026-05-12 20:48:18,964  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-11
+2026-05-12 20:48:22,135  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-12 20:48:23,139  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-11
+2026-05-12 20:48:23,730  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-12 20:48:24,747  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-03-02 to 2026-05-11
+2026-05-12 20:48:25,268  INFO  Inserted 2 rows for Consumer Price Index (All Urban)
+2026-05-12 20:48:26,321  INFO  Incremental update for Core CPI (ex food & energy) from 2026-03-02 to 2026-05-11
+2026-05-12 20:48:26,777  INFO  Inserted 2 rows for Core CPI (ex food & energy)
+2026-05-12 20:48:27,779  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-11
+2026-05-12 20:48:28,300  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-12 20:48:29,315  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-11
+2026-05-12 20:48:29,887  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-12 20:48:30,909  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 20:48:31,483  INFO  No new data for 10-Year Treasury Yield
+2026-05-12 20:48:32,498  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 20:48:33,045  INFO  No new data for 2-Year Treasury Yield
+2026-05-12 20:48:34,049  INFO  Incremental update for CBOE Volatility Index from 2026-05-09 to 2026-05-11
+2026-05-12 20:48:37,142  INFO  Inserted 1 rows for CBOE Volatility Index
+2026-05-12 20:48:38,145  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-11
+2026-05-12 20:48:38,695  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-12 20:48:39,706  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-11
+2026-05-12 20:48:40,231  INFO  Inserted 1 rows for Industrial Production
+2026-05-12 20:48:41,241  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-11
+2026-05-12 20:48:42,155  INFO  No new term spread data
+2026-05-12 20:48:42,168  INFO  Update complete. Total new rows inserted: 11
+2026-05-12 20:48:42,168  INFO  ======================================================================
+2026-05-12 21:22:33,641  INFO  ======================================================================
+2026-05-12 21:22:33,642  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-12 21:22:33,644  INFO  US macro table ready
+2026-05-12 21:22:33,646  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-11
+2026-05-12 21:22:34,549  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-12 21:22:35,552  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-11
+2026-05-12 21:22:36,176  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-12 21:22:37,192  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-04-02 to 2026-05-11
+2026-05-12 21:22:38,631  INFO  Inserted 1 rows for Consumer Price Index (All Urban)
+2026-05-12 21:22:39,635  INFO  Incremental update for Core CPI (ex food & energy) from 2026-04-02 to 2026-05-11
+2026-05-12 21:22:43,681  INFO  Inserted 1 rows for Core CPI (ex food & energy)
+2026-05-12 21:22:44,685  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-11
+2026-05-12 21:22:47,418  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-12 21:22:48,433  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-11
+2026-05-12 21:22:48,967  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-12 21:22:49,985  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 21:22:51,560  INFO  No new data for 10-Year Treasury Yield
+2026-05-12 21:22:52,577  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 21:22:53,762  INFO  No new data for 2-Year Treasury Yield
+2026-05-12 21:22:54,779  INFO  CBOE Volatility Index already up to date (last=2026-05-11)
+2026-05-12 21:22:55,794  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-11
+2026-05-12 21:22:56,961  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-12 21:22:57,964  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-11
+2026-05-12 21:22:58,496  INFO  Inserted 1 rows for Industrial Production
+2026-05-12 21:22:59,512  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-11
+2026-05-12 21:23:01,569  INFO  No new term spread data
+2026-05-12 21:23:01,593  INFO  Update complete. Total new rows inserted: 8
+2026-05-12 21:23:01,593  INFO  ======================================================================
+2026-05-12 21:40:30,553  INFO  ======================================================================
+2026-05-12 21:40:30,554  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-12 21:40:30,557  INFO  US macro table ready
+2026-05-12 21:40:30,559  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-11
+2026-05-12 21:40:31,395  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-12 21:40:32,397  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-11
+2026-05-12 21:40:32,912  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-12 21:40:33,920  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-04-02 to 2026-05-11
+2026-05-12 21:40:34,379  INFO  Inserted 1 rows for Consumer Price Index (All Urban)
+2026-05-12 21:40:35,381  INFO  Incremental update for Core CPI (ex food & energy) from 2026-04-02 to 2026-05-11
+2026-05-12 21:40:36,395  INFO  Inserted 1 rows for Core CPI (ex food & energy)
+2026-05-12 21:40:37,410  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-11
+2026-05-12 21:40:39,253  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-12 21:40:40,255  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-11
+2026-05-12 21:40:40,963  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-12 21:40:41,997  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 21:40:42,722  INFO  No new data for 10-Year Treasury Yield
+2026-05-12 21:40:43,724  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 21:40:45,297  INFO  No new data for 2-Year Treasury Yield
+2026-05-12 21:40:46,298  INFO  CBOE Volatility Index already up to date (last=2026-05-11)
+2026-05-12 21:40:47,301  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-11
+2026-05-12 21:40:48,639  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-12 21:40:49,640  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-11
+2026-05-12 21:40:50,439  INFO  Inserted 1 rows for Industrial Production
+2026-05-12 21:40:51,440  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-11
+2026-05-12 21:40:54,806  INFO  No new term spread data
+2026-05-12 21:40:54,810  INFO  Update complete. Total new rows inserted: 8
+2026-05-12 21:40:54,810  INFO  ======================================================================
+2026-05-12 23:31:09,900  INFO  ======================================================================
+2026-05-12 23:31:09,901  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-12 23:31:09,903  INFO  US macro table ready
+2026-05-12 23:31:09,906  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-11
+2026-05-12 23:31:16,929  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-12 23:31:17,945  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-11
+2026-05-12 23:31:21,582  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-12 23:31:22,598  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-04-02 to 2026-05-11
+2026-05-12 23:31:25,760  INFO  Inserted 1 rows for Consumer Price Index (All Urban)
+2026-05-12 23:31:26,763  INFO  Incremental update for Core CPI (ex food & energy) from 2026-04-02 to 2026-05-11
+2026-05-12 23:31:27,408  INFO  Inserted 1 rows for Core CPI (ex food & energy)
+2026-05-12 23:31:28,424  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-11
+2026-05-12 23:31:28,960  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-12 23:31:29,985  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-11
+2026-05-12 23:31:30,700  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-12 23:31:31,704  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 23:31:32,547  INFO  No new data for 10-Year Treasury Yield
+2026-05-12 23:31:33,552  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-11
+2026-05-12 23:31:34,263  INFO  No new data for 2-Year Treasury Yield
+2026-05-12 23:31:35,279  INFO  CBOE Volatility Index already up to date (last=2026-05-11)
+2026-05-12 23:31:36,283  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-11
+2026-05-12 23:31:36,845  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-12 23:31:37,860  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-11
+2026-05-12 23:31:38,481  INFO  Inserted 1 rows for Industrial Production
+2026-05-12 23:31:39,497  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-11
+2026-05-12 23:31:40,942  INFO  No new term spread data
+2026-05-12 23:31:40,965  INFO  Update complete. Total new rows inserted: 8
+2026-05-12 23:31:40,966  INFO  ======================================================================
+2026-05-13 00:44:40,985  INFO  ======================================================================
+2026-05-13 00:44:40,986  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-13 00:44:40,989  INFO  US macro table ready
+2026-05-13 00:44:40,991  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-12
+2026-05-13 00:44:42,077  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-13 00:44:43,092  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-12
+2026-05-13 00:44:43,690  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-13 00:44:44,705  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-04-02 to 2026-05-12
+2026-05-13 00:44:45,238  INFO  Inserted 1 rows for Consumer Price Index (All Urban)
+2026-05-13 00:44:46,254  INFO  Incremental update for Core CPI (ex food & energy) from 2026-04-02 to 2026-05-12
+2026-05-13 00:44:46,859  INFO  Inserted 1 rows for Core CPI (ex food & energy)
+2026-05-13 00:44:47,876  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-12
+2026-05-13 00:44:48,602  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-13 00:44:49,619  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-12
+2026-05-13 00:44:50,146  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-13 00:44:51,162  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-12
+2026-05-13 00:44:51,867  INFO  No new data for 10-Year Treasury Yield
+2026-05-13 00:44:52,870  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-12
+2026-05-13 00:44:56,028  INFO  No new data for 2-Year Treasury Yield
+2026-05-13 00:44:57,045  INFO  Incremental update for CBOE Volatility Index from 2026-05-12 to 2026-05-12
+2026-05-13 00:45:00,160  INFO  No new data for CBOE Volatility Index
+2026-05-13 00:45:01,176  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-12
+2026-05-13 00:45:04,592  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-13 00:45:05,610  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-12
+2026-05-13 00:45:09,300  INFO  Inserted 1 rows for Industrial Production
+2026-05-13 00:45:10,314  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-12
+2026-05-13 00:45:11,136  INFO  No new term spread data
+2026-05-13 00:45:11,147  INFO  Update complete. Total new rows inserted: 8
+2026-05-13 00:45:11,148  INFO  ======================================================================
+2026-05-17 13:35:44,777  INFO  ======================================================================
+2026-05-17 13:35:44,778  INFO  US Macro Update – INCREMENTAL UPDATE
+2026-05-17 13:35:44,783  INFO  US macro table ready
+2026-05-17 13:35:44,786  INFO  Incremental update for Gross Domestic Product from 2026-01-02 to 2026-05-16
+2026-05-17 13:35:46,383  INFO  Inserted 1 rows for Gross Domestic Product
+2026-05-17 13:35:47,385  INFO  Incremental update for Real GDP Growth Rate from 2026-01-02 to 2026-05-16
+2026-05-17 13:35:47,888  INFO  Inserted 1 rows for Real GDP Growth Rate
+2026-05-17 13:35:48,892  INFO  Incremental update for Consumer Price Index (All Urban) from 2026-04-02 to 2026-05-16
+2026-05-17 13:35:49,436  INFO  Inserted 1 rows for Consumer Price Index (All Urban)
+2026-05-17 13:35:50,446  INFO  Incremental update for Core CPI (ex food & energy) from 2026-04-02 to 2026-05-16
+2026-05-17 13:35:51,272  INFO  Inserted 1 rows for Core CPI (ex food & energy)
+2026-05-17 13:35:52,289  INFO  Incremental update for Unemployment Rate from 2026-04-02 to 2026-05-16
+2026-05-17 13:35:52,807  INFO  Inserted 1 rows for Unemployment Rate
+2026-05-17 13:35:53,823  INFO  Incremental update for Effective Federal Funds Rate from 2026-04-02 to 2026-05-16
+2026-05-17 13:35:54,357  INFO  Inserted 1 rows for Effective Federal Funds Rate
+2026-05-17 13:35:55,360  INFO  Incremental update for 10-Year Treasury Yield from 2026-05-09 to 2026-05-16
+2026-05-17 13:35:55,877  INFO  Inserted 4 rows for 10-Year Treasury Yield
+2026-05-17 13:35:56,892  INFO  Incremental update for 2-Year Treasury Yield from 2026-05-09 to 2026-05-16
+2026-05-17 13:35:57,440  INFO  Inserted 4 rows for 2-Year Treasury Yield
+2026-05-17 13:35:58,466  INFO  Incremental update for CBOE Volatility Index from 2026-05-12 to 2026-05-16
+2026-05-17 13:35:59,064  INFO  Inserted 3 rows for CBOE Volatility Index
+2026-05-17 13:36:00,067  INFO  Incremental update for Consumer Sentiment from 2026-03-02 to 2026-05-16
+2026-05-17 13:36:00,699  INFO  Inserted 1 rows for Consumer Sentiment
+2026-05-17 13:36:01,715  INFO  Incremental update for Industrial Production from 2026-03-02 to 2026-05-16
+2026-05-17 13:36:02,223  INFO  Inserted 2 rows for Industrial Production
+2026-05-17 13:36:03,240  INFO  Incremental update for Term Spread from 2026-05-09 to 2026-05-16
+2026-05-17 13:36:04,190  INFO  Inserted 4 rows for Term Spread
+2026-05-17 13:36:04,206  INFO  Update complete. Total new rows inserted: 24
+2026-05-17 13:36:04,206  INFO  ======================================================================

@@ -1,0 +1,40 @@
+# MICC — Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# ── Core Data ─────────────────────────────────────────────────────────
+pandas>=2.2.0
+numpy>=1.26.0
+pyarrow>=15.0.0        # Parquet read/write
+fastparquet>=2024.2.0  # Alternative Parquet engine
+
+# ── File Watching ─────────────────────────────────────────────────────
+watchdog>=4.0.0        # Folder monitoring (watch_folder.py)
+
+# ── Database ──────────────────────────────────────────────────────────
+duckdb>=0.10.0         # Analytical queries on SQLite/Parquet
+# sqlite3 is built into Python — no install needed
+
+# ── HTTP / APIs ───────────────────────────────────────────────────────
+httpx>=0.27.0          # Async HTTP for LLM APIs
+aiohttp>=3.9.0         # Async HTTP (bot)
+python-dotenv>=1.0.0   # Load .env file
+
+# ── Statistical / ML (Phase 2 agents) ────────────────────────────────
+scikit-learn>=1.4.0
+xgboost>=2.0.0
+statsmodels>=0.14.0
+
+# ── Visualization (Phase 3 dashboard backend) ─────────────────────────
+plotly>=5.20.0
+
+# ── Telegram Bot ──────────────────────────────────────────────────────
+python-telegram-bot>=21.0.0
+
+# ── Reporting ─────────────────────────────────────────────────────────
+jinja2>=3.1.0          # Report templates
+weasyprint>=62.0       # PDF generation (optional, heavy)
+
+# ── Utilities ─────────────────────────────────────────────────────────
+rich>=13.7.0           # Beautiful terminal output
+tqdm>=4.66.0           # Progress bars
+python-dateutil>=2.9.0 # Robust date parsing

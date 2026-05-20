@@ -1,0 +1,72 @@
+2026-05-12 20:51:08,466  INFO  ============================================================
+2026-05-12 20:51:08,466  INFO  India Macro from FRED
+2026-05-12 20:51:08,470  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-10 to 2026-05-11
+2026-05-12 20:51:09,207  INFO    -> No new data
+2026-05-12 20:51:10,208  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-10 to 2026-05-11
+2026-05-12 20:51:10,744  INFO    -> No new data
+2026-05-12 20:51:11,746  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 20:51:12,586  INFO    -> No new data
+2026-05-12 20:51:13,588  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 20:51:14,221  INFO    -> No new data
+2026-05-12 20:51:15,226  INFO  India macro update complete. Total rows: 0
+2026-05-12 20:51:15,227  INFO  ============================================================
+2026-05-12 21:24:47,104  INFO  ============================================================
+2026-05-12 21:24:47,105  INFO  India Macro from FRED
+2026-05-12 21:24:47,108  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-10 to 2026-05-11
+2026-05-12 21:24:47,825  INFO    -> No new data
+2026-05-12 21:24:48,826  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-10 to 2026-05-11
+2026-05-12 21:24:50,295  INFO    -> No new data
+2026-05-12 21:24:51,296  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 21:24:52,034  INFO    -> No new data
+2026-05-12 21:24:53,035  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 21:24:53,550  INFO    -> No new data
+2026-05-12 21:24:54,555  INFO  India macro update complete. Total rows: 0
+2026-05-12 21:24:54,556  INFO  ============================================================
+2026-05-12 21:42:27,198  INFO  ============================================================
+2026-05-12 21:42:27,198  INFO  India Macro from FRED
+2026-05-12 21:42:27,201  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-10 to 2026-05-11
+2026-05-12 21:42:28,245  INFO    -> No new data
+2026-05-12 21:42:29,246  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-10 to 2026-05-11
+2026-05-12 21:42:30,688  INFO    -> No new data
+2026-05-12 21:42:31,688  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 21:42:32,586  INFO    -> No new data
+2026-05-12 21:42:33,587  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 21:42:35,136  INFO    -> No new data
+2026-05-12 21:42:36,138  INFO  India macro update complete. Total rows: 0
+2026-05-12 21:42:36,139  INFO  ============================================================
+2026-05-12 23:33:36,803  INFO  ============================================================
+2026-05-12 23:33:36,815  INFO  India Macro from FRED
+2026-05-12 23:33:36,819  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-10 to 2026-05-11
+2026-05-12 23:33:38,678  INFO    -> No new data
+2026-05-12 23:33:39,679  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-10 to 2026-05-11
+2026-05-12 23:33:40,317  INFO    -> No new data
+2026-05-12 23:33:41,318  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 23:33:46,915  INFO    -> No new data
+2026-05-12 23:33:47,916  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-10 to 2026-05-11
+2026-05-12 23:33:49,391  INFO    -> No new data
+2026-05-12 23:33:50,396  INFO  India macro update complete. Total rows: 0
+2026-05-12 23:33:50,397  INFO  ============================================================
+2026-05-13 00:46:56,540  INFO  ============================================================
+2026-05-13 00:46:56,553  INFO  India Macro from FRED
+2026-05-13 00:46:56,556  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-11 to 2026-05-12
+2026-05-13 00:46:57,614  INFO    -> No new data
+2026-05-13 00:46:58,615  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-11 to 2026-05-12
+2026-05-13 00:46:59,252  INFO    -> No new data
+2026-05-13 00:47:00,253  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-11 to 2026-05-12
+2026-05-13 00:47:01,507  INFO    -> No new data
+2026-05-13 00:47:02,509  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-11 to 2026-05-12
+2026-05-13 00:47:03,350  INFO    -> No new data
+2026-05-13 00:47:04,356  INFO  India macro update complete. Total rows: 0
+2026-05-13 00:47:04,357  INFO  ============================================================
+2026-05-17 13:38:56,280  INFO  ============================================================
+2026-05-17 13:38:56,295  INFO  India Macro from FRED
+2026-05-17 13:38:56,299  INFO  Fetching India CPI (OECD) (INDCPIALLQINMEI) from 2026-02-15 to 2026-05-16
+2026-05-17 13:38:57,220  INFO    -> No new data
+2026-05-17 13:38:58,221  INFO  Fetching India Forex Reserves (USD) (TRESEGINM194N) from 2026-02-15 to 2026-05-16
+2026-05-17 13:38:58,657  INFO    -> No new data
+2026-05-17 13:38:59,658  INFO  Fetching India Exports (USD) (XTEXVA01INM664S) from 2026-02-15 to 2026-05-16
+2026-05-17 13:39:00,224  INFO    -> 2 rows inserted
+2026-05-17 13:39:01,225  INFO  Fetching India Imports (USD) (XTIMVA01INM664S) from 2026-02-15 to 2026-05-16
+2026-05-17 13:39:01,949  INFO    -> 2 rows inserted
+2026-05-17 13:39:02,982  INFO  India macro update complete. Total rows: 4
+2026-05-17 13:39:02,983  INFO  ============================================================

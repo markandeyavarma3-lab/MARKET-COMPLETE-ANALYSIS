@@ -1,0 +1,34 @@
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   MICC Database Initializer
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | Running migrations on existing tables...
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | Creating missing tables...
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   stock_delivery: 2829938 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   indices_data: 110390 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   market_snapshot: 11349 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   sme_data: 0 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   index_holdings: 0 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   etf_data: 0 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   market_breadth: 0 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   market_activity: 0 rows
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | Creating indexes...
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 21:58:36 | INFO     | pipeline.db_init |   Database ready.
+2026-05-05 21:58:36 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   MICC Database Initializer
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | Running migrations on existing tables...
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | Creating missing tables...
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   stock_delivery: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   indices_data: 110390 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   market_snapshot: 15132 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   sme_data: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   index_holdings: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   etf_data: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   market_breadth: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   market_activity: 0 rows
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | Creating indexes...
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | ==================================================
+2026-05-05 22:11:39 | INFO     | pipeline.db_init |   Database ready.
+2026-05-05 22:11:39 | INFO     | pipeline.db_init | ==================================================

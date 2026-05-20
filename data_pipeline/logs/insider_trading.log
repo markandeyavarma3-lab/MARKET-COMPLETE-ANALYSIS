@@ -1,0 +1,36 @@
+2026-05-12 20:50:43,722  INFO  Insider trading table ready.
+2026-05-12 20:50:43,723  INFO  --- INCREMENTAL UPDATE ---
+2026-05-12 20:50:43,723  INFO  Fetching insider trades from 2026-05-11 to 2026-05-12
+2026-05-12 20:50:45,574  INFO  Fetched 138 raw records.
+2026-05-12 20:50:45,597  WARNING  No data in date range 2026-05-11 to 2026-05-12
+2026-05-12 20:50:45,605  INFO  Insider trading ETL finished.
+2026-05-12 21:24:28,636  INFO  Insider trading table ready.
+2026-05-12 21:24:28,649  INFO  --- INCREMENTAL UPDATE ---
+2026-05-12 21:24:28,649  INFO  Fetching insider trades from 2026-05-11 to 2026-05-12
+2026-05-12 21:24:30,255  INFO  Fetched 138 raw records.
+2026-05-12 21:24:30,274  WARNING  No data in date range 2026-05-11 to 2026-05-12
+2026-05-12 21:24:30,298  INFO  Insider trading ETL finished.
+2026-05-12 21:42:10,417  INFO  Insider trading table ready.
+2026-05-12 21:42:10,418  INFO  --- INCREMENTAL UPDATE ---
+2026-05-12 21:42:10,418  INFO  Fetching insider trades from 2026-05-11 to 2026-05-12
+2026-05-12 21:42:12,075  INFO  Fetched 138 raw records.
+2026-05-12 21:42:12,100  WARNING  No data in date range 2026-05-11 to 2026-05-12
+2026-05-12 21:42:12,103  INFO  Insider trading ETL finished.
+2026-05-12 23:33:18,779  INFO  Insider trading table ready.
+2026-05-12 23:33:18,793  INFO  --- INCREMENTAL UPDATE ---
+2026-05-12 23:33:18,794  INFO  Fetching insider trades from 2026-05-11 to 2026-05-12
+2026-05-12 23:33:20,080  INFO  Fetched 138 raw records.
+2026-05-12 23:33:20,110  WARNING  No data in date range 2026-05-11 to 2026-05-12
+2026-05-12 23:33:20,116  INFO  Insider trading ETL finished.
+2026-05-13 00:46:36,689  INFO  Insider trading table ready.
+2026-05-13 00:46:36,703  INFO  --- INCREMENTAL UPDATE ---
+2026-05-13 00:46:36,703  INFO  Fetching insider trades from 2026-05-12 to 2026-05-13
+2026-05-13 00:46:38,051  INFO  Fetched 138 raw records.
+2026-05-13 00:46:38,061  WARNING  No data in date range 2026-05-12 to 2026-05-13
+2026-05-13 00:46:38,063  INFO  Insider trading ETL finished.
+2026-05-17 13:38:07,376  INFO  Insider trading table ready.
+2026-05-17 13:38:07,390  INFO  --- INCREMENTAL UPDATE ---
+2026-05-17 13:38:07,390  INFO  Fetching insider trades from 2026-05-16 to 2026-05-17
+2026-05-17 13:38:09,228  INFO  Fetched 113 raw records.
+2026-05-17 13:38:09,261  WARNING  No data in date range 2026-05-16 to 2026-05-17
+2026-05-17 13:38:09,267  INFO  Insider trading ETL finished.

@@ -1,0 +1,30 @@
+.env
+*.env
+__pycache__/
+*.pyc
+# Node modules (large, never commit)
+node_modules/
+.next/
+out/
+# Large binaries
+*.node
+*.exe
+*.dll
+*.dylib
+*.so
+# Database files
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+# Python cache
+*.pyo
+# Parquet files (huge)
+*.parquet
+# Secrets
+# Checkpoints
+pipeline_state.json
+adjusted.json
+agents/
+seasonality_stocks_checkpoint.json
+seasonality_v3_checkpoint.json

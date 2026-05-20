@@ -1,0 +1,268 @@
+"""
+run_pipeline.py
+
+================
+MICC Data Pipeline - Daily Orchestrator
+Location: D:/MICC/data_pipeline/run_pipeline.py
+
+Usage:
+  py run_pipeline.py              -> full data update (no engine)
+  py run_pipeline.py --with-engine -> data + engine + Telegram
+  py run_pipeline.py --check      -> health check only
+  py run_pipeline.py --weekly     -> include fundamentals + corporate actions
+"""
+
+import subprocess
+import sys
+import time
+import os
+from datetime import datetime
+from pathlib import Path
+
+PIPELINE_DIR = Path(__file__).parent.resolve()
+MICC_DIR     = PIPELINE_DIR.parent
+
+
+def log(msg, level="INFO"):
+    ts  = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    tag = {"OK": " OK ", "FAIL": "FAIL", "WARN": "WARN"}.get(level, "INFO")
+    print(f"[{ts}] [{tag}]  {msg}", flush=True)
+
+
+def clean_env():
+    env = os.environ.copy()
+    try:
+        import certifi
+        b = certifi.where()
+        env["REQUESTS_CA_BUNDLE"] = b
+        env["SSL_CERT_FILE"]      = b
+        env["CURL_CA_BUNDLE"]     = b
+    except ImportError:
+        pass
+    env["PYTHONIOENCODING"] = "utf-8"
+    return env
+
+
+def run(script_path, desc, args=None, timeout=3600, cwd=None):
+    cmd = [sys.executable, str(script_path)] + (args or [])
+    log(f"-> {desc}")
+    t0 = time.time()
+    try:
+        result = subprocess.run(
+            cmd, capture_output=True, text=True,
+            timeout=timeout,
+            cwd=str(cwd or Path(script_path).parent),
+            env=clean_env(),
+        )
+        elapsed = time.time() - t0
+        if result.returncode == 0:
+            log(f"{desc} ({elapsed:.0f}s)", "OK")
+            return True
+        else:
+            log(f"{desc}  exit {result.returncode}  ({elapsed:.0f}s)", "FAIL")
+            if result.stderr:
+                for line in result.stderr.strip().splitlines()[-5:]:
+                    log(f"   {line}", "FAIL")
+            return False
+    except subprocess.TimeoutExpired:
+        elapsed = time.time() - t0
+        log(f"{desc} timed out after {elapsed:.0f}s (limit: {timeout}s)", "FAIL")
+        return False
+    except Exception as e:
+        log(f"{desc} exception: {e}", "FAIL")
+        return False
+
+
+def main():
+    weekly      = "--weekly"      in sys.argv
+    with_engine = "--with-engine" in sys.argv
+
+    if "--check" in sys.argv:
+        # Phase 8B -- Alert checks (fires Telegram if triggered)
+    _alert = MICC_DIR / "agent_alert.py"
+    if _alert.exists():
+        r["alerts"] = run(_alert, "Alert checks (price/RSI/pattern)",
+                         args=["--send"], timeout=120, cwd=MICC_DIR)
+
+    # Phase 9A -- Global indices daily update (incremental)
+        r["global_idx"] = run(
+            PIPELINE_DIR / "phase9a_fetch_global_indices.py",
+            "Global Indices (yfinance incremental)",
+            timeout=180, cwd=PIPELINE_DIR)
+
+        # Phase 9B -- Monthly index window-stats rebuild (indices only, ~10 min)
+        # Full stock rebuild is manual: py phase9b_build_window_stats.py --resume
+        from datetime import datetime as _dt9b
+        if _dt9b.today().day == 1:
+            log("1st of month: rebuilding index window stats (Phase 9B)")
+            r["win_stats"] = run(
+                PIPELINE_DIR / "phase9b_build_window_stats.py",
+                "Window Stats rebuild (indices)",
+                args=["--indices-only", "--resume"],
+                timeout=900, cwd=PIPELINE_DIR)
+
+        run(PIPELINE_DIR / "check_db_health.py", "DB Health Check", timeout=120)
+        return
+
+    print()
+    print("=" * 65)
+    print("  MICC DATA PIPELINE - FULL DAILY UPDATE")
+    print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    if with_engine:
+        print("  Mode: DATA + ENGINE (--with-engine)")
+    else:
+        print("  Mode: DATA ONLY (use --with-engine to also run agents)")
+    print("=" * 65)
+    print()
+
+    r = {}
+
+    # Phase 1 — Core market data
+    r["core"]        = run(PIPELINE_DIR / "daily_update.py",
+                           "Core: Stocks + Indices + FII/DII + F&O + Global",
+                           timeout=1800)
+
+    r["delivery"]    = run(PIPELINE_DIR / "update_delivery.py",
+                           "Delivery % (nselib)", timeout=600)
+
+    # Phase 1B — Global indices (incremental, ~5 min, resilient)
+    _gfetch = MICC_DIR / "fetch_global_indices_v2.py"
+    if _gfetch.exists():
+        r["global_idx"] = run(_gfetch,
+                              "Global Indices fetch (52 symbols, incremental)",
+                              timeout=600, cwd=MICC_DIR)
+    else:
+        log("fetch_global_indices_v2.py not found in D:/MICC/ — skipping", "WARN")
+        r["global_idx"] = False
+
+    # Phase 2 — Macro
+    r["us_macro"]    = run(PIPELINE_DIR / "update_macro_us.py",
+                           "US Macro (FRED)", args=["--daily"], timeout=600)
+
+    r["mf_nav"]      = run(PIPELINE_DIR / "update_mf_nav.py",
+                           "MF NAVs (top 100 schemes)", timeout=600)
+
+    # Phase 3 — Corporate events
+    r["announce"]    = run(PIPELINE_DIR / "phase4_corporate_announcements.py",
+                           "Corporate Announcements (NSE)", timeout=300)
+
+    r["insider"]     = run(PIPELINE_DIR / "insider_trading_fetch.py",
+                           "Insider Trading (SEBI)", timeout=300)
+
+    # Phase 4 — Analytics
+    r["greeks"]      = run(PIPELINE_DIR / "phase2_greeks_calculator.py",
+                           "Option Greeks + GEX (incremental)",
+                           args=["--daily"], timeout=600)
+
+    # Phase 5 — Slow macro
+    r["world_bank"]  = run(PIPELINE_DIR / "update_world_bank_india.py",
+                           "World Bank India Macro", timeout=300)
+
+    r["india_macro"] = run(PIPELINE_DIR / "update_macro_india_fred.py",
+                           "FRED India Macro", args=["--daily"], timeout=300)
+
+    # Phase 6a — NSE Snapshot auto-download -> market_snapshot
+    snap = MICC_DIR / "auto_update_snapshot.py"
+    if snap.exists():
+        r["snapshot"] = run(snap,
+                            "NSE Snapshot auto-download -> market_snapshot",
+                            timeout=1800, cwd=MICC_DIR)
+    else:
+        log("auto_update_snapshot.py not in D:/MICC/ — copy it there", "WARN")
+        r["snapshot"] = False
+
+    # Phase 6b — Update parquet from stock_delivery (keeps Beta data current)
+    # stock_delivery is updated daily by Phase 1 above.
+    # Parquet files (read by Agent Beta) need to be synced from delivery.
+    parquet_update = MICC_DIR / "update_parquet_from_delivery.py"
+    if parquet_update.exists():
+        r["parquet_sync"] = run(parquet_update,
+                                "Parquet sync from stock_delivery (Agent Beta data)",
+                                timeout=1800, cwd=MICC_DIR)
+    else:
+        log("update_parquet_from_delivery.py not in D:/MICC/ — copy it there", "WARN")
+        r["parquet_sync"] = False
+
+    # Phase 7 — Weekly (optional)
+    if weekly:
+        r["fundamentals"]  = run(PIPELINE_DIR / "update_fundamentals.py",
+                                 "Fundamentals TTM (2675 symbols)", timeout=7200)
+        r["corp_actions"]  = run(PIPELINE_DIR / "update_corporate_actions.py",
+                                 "Corporate Actions (splits + dividends)", timeout=1800)
+
+    
+    # Phase 10 -- Agent Epsilon (Options Intelligence)
+    epsilon = MICC_DIR / "agent_epsilon.py"
+    if epsilon.exists():
+        r["epsilon"] = run(epsilon,
+                          "Agent Epsilon: Options Intelligence",
+                          args=["--send"] if with_engine else [],
+                          timeout=300, cwd=MICC_DIR)
+    else:
+        log("agent_epsilon.py not found -- copy it to D:/MICC/", "WARN")
+        r["epsilon"] = False
+
+    # Phase 8 — Health check
+    run(PIPELINE_DIR / "check_db_health.py", "Health Check", timeout=120)
+
+    # Phase 9 — Engine (only with --with-engine)
+    if with_engine:
+        eng = MICC_DIR / "micc_engine.py"
+        if eng.exists():
+            r["engine"] = run(eng,
+                              "MICC Engine: All 4 Agents + Telegram",
+                              args=["7", "--send"],
+                              timeout=1800, cwd=MICC_DIR)
+        else:
+            log(f"micc_engine.py not found at {eng}", "WARN")
+            r["engine"] = False
+
+    # Morning brief (sends Telegram summary)
+    _mb = Path(r'D:/MICC/morning_brief.py')
+    if _mb.exists():
+        run(_mb, 'Morning brief (Telegram)', timeout=120)
+
+
+    # Summary
+    passed = sum(1 for v in r.values() if v)
+    failed = sum(1 for v in r.values() if not v)
+    print()
+    print("=" * 65)
+    print("  SUMMARY")
+    print("=" * 65)
+    for name, ok in r.items():
+        print(f"  [{'OK  ' if ok else 'FAIL'}]  {name}")
+    print()
+    log(f"Passed: {passed}  |  Failed: {failed}")
+    print("=" * 65)
+    print()
+
+    if not with_engine:
+        print("  DATA UPDATE COMPLETE.")
+        print()
+        print("  To run the engine:")
+        print("    cd D:\\MICC && py micc_engine.py 7 --send")
+        print()
+        print("  Or everything at once next time:")
+        print("    py run_pipeline.py --with-engine")
+        print()
+
+    sys.exit(0 if failed == 0 else 1)
+
+
+if __name__ == "__main__":
+
+    # Phase 11: Agent Zeta (Watchlist Intelligence)
+    if args.with_engine:
+        print("\n[Phase 11] Agent Zeta -- Watchlist Intelligence...")
+        import subprocess as _sp
+        _r = _sp.run(
+            ["py", str(Path(r"D:\MICC") / "agent_zeta.py"), "--send"],
+            capture_output=True, text=True, timeout=300
+        )
+        if _r.returncode != 0:
+            print(f"  [WARN] Zeta failed: {_r.stderr[:200]}")
+        else:
+            print("  Zeta: OK")
+
+    main()

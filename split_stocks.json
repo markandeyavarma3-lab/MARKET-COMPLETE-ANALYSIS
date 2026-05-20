@@ -1,0 +1,31 @@
+{
+  "detected_at": "2026-05-18T23:19:55.024003",
+  "n_split_stocks": 5,
+  "split_stocks": [
+    {
+      "symbol": "JAINREC",
+      "ratio": 1.2216,
+      "hist_rows": 0
+    },
+    {
+      "symbol": "AMBER",
+      "ratio": 1.1849,
+      "hist_rows": 0
+    },
+    {
+      "symbol": "FCL",
+      "ratio": 0.8336,
+      "hist_rows": 0
+    },
+    {
+      "symbol": "SUVEN",
+      "ratio": 0.836,
+      "hist_rows": 0
+    },
+    {
+      "symbol": "CUBEXTUB",
+      "ratio": 1.152,
+      "hist_rows": 0
+    }
+  ]
+}

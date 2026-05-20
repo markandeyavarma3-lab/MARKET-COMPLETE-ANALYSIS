@@ -1,0 +1,219 @@
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_01042026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_02042026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_04052026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_05052026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 32 rows
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_06042026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_07042026.csv
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_08042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_09042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_10042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_13042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_15042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_16042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_17042026 (1).csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_17042026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_19032026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_20032026.csv
+2026-05-05 21:58:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_20042026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_21042026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 143 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_22042026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_23032026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_23042026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_24032026.csv
+2026-05-05 21:58:56 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_24042026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_25032026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_27032026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 143 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_27042026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_28042026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_29042026.csv
+2026-05-05 21:58:57 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 146 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_01042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_02042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_04052026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_05052026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 32 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_06042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_07042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_08042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_09042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_10042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_13042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_15042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_16042026.csv
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:54 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_17042026 (1).csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_17042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_19032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_20032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_20042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_21042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 143 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_22042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_23032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_23042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_24032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 142 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_24042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_25032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_27032026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 143 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_27042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_28042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 147 rows
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser: ind_close_all_29042026.csv
+2026-05-05 22:11:55 | INFO     | pipeline.parsers.holdings | DailySnapshotParser result: 146 rows
+2026-05-05 22:45:04 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA010426.csv
+2026-05-05 22:45:04 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:04 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA020426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA060426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA070426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA080426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA090426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA100426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA130426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA150426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA160426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA170426.csv
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:05 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA180326.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA200426.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA210426.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA220426.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA230326.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA230426.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA240326.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA240426.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA250326.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA270326.csv
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:06 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA270426.csv
+2026-05-05 22:45:07 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:07 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA280426.csv
+2026-05-05 22:45:07 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:07 | INFO     | pipeline.parsers.holdings | MarketActivityParser: MA290426.csv
+2026-05-05 22:45:07 | INFO     | pipeline.parsers.holdings | MarketActivityParser result: 5 rows
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_010426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_020426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_060426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_070426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_080426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_090426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_100426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_130426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_150426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_160426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_170426.csv
+2026-05-05 22:45:15 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_190326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_200326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_200426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_210426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_220426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_230326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_230426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_240326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_240426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_250326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_270326.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_270426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_280426.csv
+2026-05-05 22:45:16 | INFO     | pipeline.parsers.holdings | NiftyHoldingsParser: top10nifty50_290426.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-01-04-2026.csv
+2026-05-05 22:45:18 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,297 rows
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-06-04-2026.csv
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,346 rows
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-07-04-2026.csv
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,314 rows
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-08-04-26.csv
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,369 rows
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-09-04-26.csv
+2026-05-05 22:45:19 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,322 rows
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-10-04-26.csv
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,342 rows
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-13-04-2026.csv
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,325 rows
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-15-04-2026.csv
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,358 rows
+2026-05-05 22:45:20 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-16-04-2026.csv
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,324 rows
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-17-04-2026.csv
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,350 rows
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-20-04-2026.csv
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,427 rows
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-21-04-2026.csv
+2026-05-05 22:45:21 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,436 rows
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-22-04-2026.csv
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,396 rows
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-24-03-2026.csv
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,369 rows
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-24-04-2026.csv
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,395 rows
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-27-03-2026.csv
+2026-05-05 22:45:22 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,323 rows
+2026-05-05 22:45:23 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-27-04-2026.csv
+2026-05-05 22:45:23 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,447 rows
+2026-05-05 22:45:23 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser: StocksTraded-30-03-2026.csv
+2026-05-05 22:45:23 | INFO     | pipeline.parsers.holdings | TotalStocksTradedParser result: 3,386 rows

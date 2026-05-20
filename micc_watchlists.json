@@ -1,0 +1,10 @@
+{
+  "lists": [
+    {
+      "id": "default",
+      "name": "My Watchlist",
+      "symbols": [],
+      "alerts": []
+    }
+  ]
+}

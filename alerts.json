@@ -1,0 +1,32 @@
+[
+  {
+    "id": "3daeac37",
+    "type": "RSI_BELOW",
+    "symbol": "NIFTY50",
+    "target": 35.0,
+    "note": "Oversold",
+    "days": 5,
+    "one_shot": true,
+    "active": true,
+    "created_at": "17 May 2026 12:52 IST",
+    "triggered_at": null,
+    "last_message": null,
+    "last_fired": null,
+    "cooldown_days": 1
+  },
+  {
+    "id": "c9f9afc6",
+    "type": "PRICE_ABOVE",
+    "symbol": "RELIANCE",
+    "target": 1450.0,
+    "note": "Breakout",
+    "days": 5,
+    "one_shot": true,
+    "active": true,
+    "created_at": "17 May 2026 12:52 IST",
+    "triggered_at": null,
+    "last_message": null,
+    "last_fired": null,
+    "cooldown_days": 1
+  }
+]
