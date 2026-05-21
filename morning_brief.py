@@ -29,37 +29,58 @@ def send(msg):
 # ---- Data getters -------------------------------------------------------
 
 def get_global_snapshot():
-    WATCH = ['NIFTY50','SPX','VIX','IndiaVIX','US10Y','Gold','CrudeWTI','USDINR','Bitcoin']
-    LABELS = {
-        'NIFTY50':'Nifty 50 ','SPX':'S&P 500  ','VIX':'VIX      ',
-        'IndiaVIX':'IndiaVIX ','US10Y':'US 10Y   ','Gold':'Gold     ',
-        'CrudeWTI':'Crude WTI','USDINR':'USD/INR  ','Bitcoin':'Bitcoin  ',
+    # Map of what WE want to show -> possible DB names (order = priority)
+    WANT = {
+        'Nifty 50 ':  ['NIFTY50','NIFTY 50','^NSEI','Nifty 50'],
+        'S&P 500  ':  ['SPX','S&P 500','^GSPC','SP500'],
+        'VIX      ':  ['VIX','^VIX','CBOE VIX'],
+        'IndiaVIX ':  ['IndiaVIX','INDIA VIX','India VIX','^INDIAVIX'],
+        'US 10Y   ':  ['US10Y','US 10Y','TNX','^TNX'],
+        'Gold     ':  ['Gold','GOLD','GC=F','XAU'],
+        'Crude WTI':  ['CrudeWTI','Crude WTI','WTI','CL=F'],
+        'USD/INR  ':  ['USDINR','USD/INR','USDINR=X'],
+        'Bitcoin  ':  ['Bitcoin','BITCOIN','BTC-USD','BTC'],
     }
     try:
         conn = sqlite3.connect(DB_P, timeout=10)
-        ph   = ','.join('?'*len(WATCH))
+        # Get all available symbols
+        avail = {r[0] for r in conn.execute(
+            'SELECT DISTINCT symbol FROM global_indices_daily'
+        ).fetchall()}
+        # Build query list: for each label find first matching DB symbol
+        to_query = {}  # label -> db_symbol
+        for label, candidates in WANT.items():
+            for c in candidates:
+                if c in avail:
+                    to_query[label] = c
+                    break
+        if not to_query:
+            log(f'global_snapshot: no symbols matched. DB has: {sorted(avail)[:10]}')
+            conn.close(); return []
+        syms = list(to_query.values())
+        ph   = ','.join('?'*len(syms))
         rows = conn.execute(
             f'SELECT symbol,close,pct_change FROM global_indices_daily'
             f' WHERE symbol IN ({ph})'
             f' AND date=(SELECT MAX(date) FROM global_indices_daily WHERE symbol=global_indices_daily.symbol)',
-            WATCH
+            syms
         ).fetchall()
         conn.close()
         data = {r[0]:(r[1],r[2]) for r in rows}
         result = []
-        for sym in WATCH:
-            if sym not in data: continue
-            close, chg = data[sym]
+        for label, db_sym in to_query.items():
+            if db_sym not in data: continue
+            close, chg = data[db_sym]
             if close is None: continue
-            label = LABELS.get(sym, sym)
             ico   = 'UP' if (chg or 0) > 0.3 else 'DN' if (chg or 0) < -0.3 else '--'
             chg_s = f'{chg:+.2f}%' if chg is not None else ''
-            result.append(f'  {ico} `{label}` {close:.2f}  {chg_s}')
-        log(f'global_snapshot: {len(result)}/{len(WATCH)} symbols')
+            result.append(f'  {ico} `{label}` {close:,.2f}  {chg_s}')
+        log(f'global_snapshot: {len(result)}/{len(WANT)} symbols found')
         return result
     except Exception as e:
         log(f'global_snapshot error: {e}')
         return []
+
 
 def get_fusion_picks(n=8):
     # agent_fusion saves to agents/fusion/last_report.json with key 'picks'
@@ -196,7 +217,7 @@ def main():
             fs     = p.get('fusion_score', 0)
             layers = p.get('layers_fired', [])
             tag    = '+'.join(str(l)[:3].upper() for l in layers[:5])
-            lines.append(f'  `{sym:<12}` {nl}L  [{tag}]  score={fs}')
+            lines.append(f'  `{sym:<12}` {nl}L  [{tag}]')
         lines += ['_Layers: Beta/Insider/Watch/Season/Conviction/Quant_', '']
     else:
         lines += ['_Fusion: no data -- run agent_fusion.py_', '']
