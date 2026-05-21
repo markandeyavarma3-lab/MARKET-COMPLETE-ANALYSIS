@@ -442,7 +442,7 @@ function PatCard({p,compareYears,symbol,assetType}:{p:Pattern;compareYears:numbe
               {p.n_years}yr {p.year_confidence}
             </span>
             <span style={{fontSize:9,fontWeight:700,padding:"2px 6px",borderRadius:3,background:`${degColor(p.degradation_flag)}18`,color:degColor(p.degradation_flag)}}>{degIcon(p.degradation_flag)} {p.degradation_flag}</span>
-            <span style={{fontSize:10,color:W9}}>score {p.score.toFixed(3)}</span>
+            <span style={{fontSize:10,color:W9}}>score {p.score.toFixed(3)}</span>{(p as any).oos_accuracy!=null&&<span style={{fontSize:9,padding:"2px 6px",borderRadius:3,background:(+(p as any).oos_accuracy>=0.70?"#4ade8022":"#f8717122"),color:(+(p as any).oos_accuracy>=0.70?"#4ade80":"#f87171"),marginLeft:4,fontWeight:700}}>OOS {((p as any).oos_accuracy*100).toFixed(0)}%</span>}
             <span style={{fontSize:11,color:DIM}}>{expanded?"":""}</span>
           </div>
         </div>
@@ -692,7 +692,10 @@ export default function PatternsPage(){
   );
 
   return(
-    <div style={{maxWidth:1300,margin:"0 auto",padding:"24px 20px"}}>
+    <div style={{minHeight:"100vh",background:"var(--bg)",fontFamily:"JetBrains Mono,monospace"}}>
+      <NavBar />
+      <div style={{position:"sticky",top:48,zIndex:90,background:"var(--surface)",borderBottom:"1px solid var(--border)",padding:"6px 20px",fontSize:10,color:"var(--dim)",letterSpacing:2}}>PATTERNS  /  SEASONALITY DISCOVERY</div>
+      <div style={{maxWidth:1300,margin:"0 auto",padding:"16px 20px"}}>
       <div style={{marginBottom:18}}>
         <h1 style={{margin:0,fontSize:26,fontWeight:900,letterSpacing:-0.5,color:WHT}}>SEASONAL PATTERNS</h1>
         <div style={{color:DIM,fontSize:13,marginTop:4}}>Recurring calendar windows automatically discovered from all available years</div>
@@ -840,6 +843,8 @@ export default function PatternsPage(){
           )}
         </div>
       )}
+    </div>
+      </div>
     </div>
   );
 }

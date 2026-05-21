@@ -1,4 +1,5 @@
 "use client";
+import NavBar from "@/components/NavBar";
 import { useState, useEffect, useCallback } from "react";
 import AlphaPanel        from "@/components/AlphaPanel";
 import BetaPanel         from "@/components/BetaPanel";
@@ -43,6 +44,7 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <NavBar />
       
       
       {/* Sub-header */}

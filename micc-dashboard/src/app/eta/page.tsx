@@ -2,224 +2,305 @@
 import NavBar from "@/components/NavBar";
 import { useEffect, useState } from "react";
 
-const S = {
-  page:    { padding: "28px 32px", fontFamily: "monospace", maxWidth: 1200,
-             margin: "0 auto", color: "var(--text)" },
-  hdr:     { fontSize: 22, fontWeight: 700, color: "var(--accent)",
-             letterSpacing: 1, marginBottom: 4 },
-  sub:     { fontSize: 12, color: "var(--muted)", marginBottom: 28 },
-  grid:    { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 },
-  card:    { background: "var(--card)", border: "1px solid var(--border)",
-             borderRadius: 8, padding: "18px 20px" },
-  cardHdr: { fontSize: 11, fontWeight: 700, color: "var(--accent)",
-             letterSpacing: 2, textTransform: "uppercase" as const,
-             marginBottom: 14, borderBottom: "1px solid var(--border)",
-             paddingBottom: 8 },
-  row:     { display: "flex", alignItems: "center", gap: 10,
-             padding: "7px 0", borderBottom: "1px solid #0f172a",
-             fontSize: 12 },
-  sym:     { fontWeight: 700, color: "var(--text)", minWidth: 110,
-             fontFamily: "monospace" },
-  pill:    (c: string) => ({
-             fontSize: 10, fontWeight: 700, padding: "2px 7px",
-             borderRadius: 4, background: c + "22", color: c }),
-  muted:   { color: "var(--muted)", fontSize: 11 },
-  pos:     { color: "var(--pos)", fontWeight: 700 },
-  neg:     { color: "var(--neg)", fontWeight: 700 },
-  warn:    { color: "var(--warn)", fontWeight: 700 },
-  empty:   { color: "var(--dim)", fontSize: 12, padding: "12px 0" },
-  badge:   (n: number) => ({
-             display: "inline-block", marginLeft: 8, fontSize: 10,
-             background: "var(--accent)", color: "#000",
-             borderRadius: 10, padding: "1px 7px", fontWeight: 700,
-             opacity: n > 0 ? 1 : 0.3 }),
-};
-
-function Section({ title, count, children }: any) {
-  return (
-    <div style={S.card}>
-      <NavBar />
-      <div style={S.cardHdr}>
-        {title}<span style={S.badge(count)}>{count}</span>
-      </div>
-      {children}
-    </div>
-  );
+interface InsiderCluster {
+  symbol: string; n_buys: number; total_value_cr: number; names: string;
+}
+interface BigTrade {
+  symbol: string; filing_date: string; name: string;
+  transaction_type: string; quantity: number; price: number; value: number;
+}
+interface ResultEvent {
+  symbol: string; announcement_date: string; subject: string;
+}
+interface DivEvent {
+  symbol: string; announcement_date: string; subject: string;
+}
+interface PostReaction {
+  symbol: string; announcement_date: string; ret_5d?: number;
+}
+interface UpcomingResult {
+  symbol: string; last_results_date: string; expected_due: string;
 }
 
+interface EtaData {
+  screen1_results_season?: ResultEvent[];
+  screen2_dividends?: DivEvent[];
+  screen3_insider_clusters?: InsiderCluster[];
+  screen4_big_trades?: BigTrade[];
+  screen5_post_results_reaction?: PostReaction[];
+  screen6_upcoming_results?: UpcomingResult[];
+  llm_analysis?: string;
+  timestamp?: string;
+  date?: string;
+}
+
+const fmt  = (v: unknown, d = 2) => v == null ? "--" : Number(v).toFixed(d);
+const pct  = (v: unknown) => v == null ? "--" : (Number(v) >= 0 ? "+" : "") + Number(v).toFixed(2) + "%";
+const bull = (v: unknown) => Number(v) >= 0 ? "var(--bull)" : "var(--bear)";
+const cr   = (v: unknown) => v == null ? "--" : (Number(v) / 1e7).toFixed(2) + " Cr";
+
 export default function EtaPage() {
-  const [data, setData]       = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr]         = useState("");
+  const [data, setData]   = useState<EtaData | null>(null);
+  const [loading, setL]   = useState(true);
+  const [error, setE]     = useState("");
+  const [tab, setTab]     = useState(0);
+  const [search, setSrch] = useState("");
 
   useEffect(() => {
     fetch("/api/eta")
       .then(r => r.json())
-      .then(j => { setData(j.data); setLoading(false); })
-      .catch(e => { setErr(e.message); setLoading(false); });
+      .then(d => { setData(d); setL(false); })
+      .catch(e => { setE(e.message); setL(false); });
   }, []);
 
-  if (loading) return <div style={S.page}><div style={S.muted}>Loading Eta report...</div></div>;
-  if (err || !data) return <div style={S.page}><div style={{color:"var(--neg)"}}>
-    Error: {err || "No report. Run: py agent_eta.py"}</div></div>;
+  const S: Record<string, React.CSSProperties> = {
+    page:  { minHeight: "100vh", background: "var(--bg)", fontFamily: "JetBrains Mono, monospace" },
+    sub:   { position: "sticky", top: 48, zIndex: 90, background: "var(--surface)",
+             borderBottom: "1px solid var(--border)", padding: "6px 20px",
+             display: "flex", alignItems: "center", gap: 20 },
+    stitle:{ fontSize: 10, color: "var(--dim)", letterSpacing: 2 },
+    wrap:  { maxWidth: 1400, margin: "0 auto", padding: "16px 20px" },
+    tabs:  { display: "flex", gap: 6, flexWrap: "wrap" as const, marginBottom: 20 },
+    tab:   (a: boolean): React.CSSProperties => ({
+      padding: "5px 16px", fontSize: 11, letterSpacing: 1, cursor: "pointer",
+      border: "1px solid " + (a ? "var(--accent)" : "var(--border)"),
+      borderRadius: 4, background: a ? "var(--accent)22" : "transparent",
+      color: a ? "var(--accent)" : "var(--dim)",
+    }),
+    card:  { background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" },
+    tbl:   { width: "100%", borderCollapse: "collapse" as const, fontSize: 12 },
+    th:    { padding: "8px 12px", textAlign: "left" as const, fontSize: 10, letterSpacing: 1,
+             color: "var(--dim)", borderBottom: "1px solid var(--border)", background: "var(--surface)" },
+    td:    { padding: "8px 12px", borderBottom: "1px solid var(--border)", color: "var(--text)" },
+    sym:   { color: "var(--accent)", fontWeight: 700 },
+    empty: { padding: "30px", textAlign: "center" as const, color: "var(--dim)", fontSize: 12 },
+    input: { background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 4,
+             padding: "4px 10px", fontSize: 11, color: "var(--text)", outline: "none" },
+    pre:   { fontSize: 11, color: "var(--text)", lineHeight: 1.7, whiteSpace: "pre-wrap" as const,
+             background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6,
+             padding: "12px 16px", maxHeight: 400, overflow: "auto" as const },
+    badge: (buy: boolean): React.CSSProperties => ({
+      padding: "2px 8px", borderRadius: 3, fontSize: 10, fontWeight: 700,
+      background: buy ? "var(--bull)22" : "var(--bear)22",
+      color: buy ? "var(--bull)" : "var(--bear)",
+    }),
+  };
 
-  const clusters  = data.insider_cluster    || [];
-  const bigTrades = data.big_insider_trades || [];
-  const results   = data.results_season     || [];
-  const divs      = data.dividend_calendar  || [];
-  const upcoming  = data.upcoming_results   || [];
-  const reactions = data.post_results_reaction || [];
+  const TABS = [
+    "INSIDER CLUSTERS",
+    "BIG TRADES",
+    "RESULTS SEASON",
+    "DIVIDENDS",
+    "POST-RESULTS",
+    "UPCOMING",
+    "LLM ANALYSIS",
+  ];
+
+  const filter = <T extends { symbol?: string }>(arr: T[] | undefined): T[] => {
+    if (!arr) return [];
+    if (!search) return arr;
+    return arr.filter(r => r.symbol?.toLowerCase().includes(search.toLowerCase()));
+  };
 
   return (
     <div style={S.page}>
-      <div style={S.hdr}>Agent Eta — Corporate Intelligence</div>
+      <NavBar />
       <div style={S.sub}>
-        Updated: {data.generated_at || data.date}
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        Results: {results.length}&nbsp; Insiders: {clusters.length}&nbsp;
-        Dividends: {divs.length}&nbsp; Upcoming: {upcoming.length}
+        <span style={S.stitle}>ETA  /  CORPORATE EVENTS INTELLIGENCE</span>
+        <input
+          style={S.input}
+          placeholder="search symbol..."
+          value={search}
+          onChange={e => setSrch(e.target.value)}
+        />
+        {data?.timestamp && (
+          <span style={{ fontSize: 10, color: "var(--dim)", marginLeft: "auto" }}>
+            {data.timestamp}
+          </span>
+        )}
       </div>
 
-      <div style={S.grid}>
+      <div style={S.wrap}>
+        {loading && <div style={{ color: "var(--dim)", padding: 40, textAlign: "center" }}>Loading corporate events...</div>}
+        {error   && <div style={{ color: "var(--bear)", padding: 20 }}>
+          Error: {error} -- run: py D:\MICC\agent_eta.py --send
+        </div>}
 
-        {/* Insider Clusters */}
-        <Section title="Insider Clusters" count={clusters.length}>
-          {clusters.length === 0
-            ? <div style={S.empty}>No clusters in last 30 days</div>
-            : clusters.map((c: any, i: number) => (
-              <div key={i} style={S.row}>
-                <span style={S.sym}>{c.symbol}</span>
-                <span style={{...S.pill("#22c55e"), marginLeft: "auto"}}>
-                  {c.buy_count}x BUY
-                </span>
-                <span style={S.warn}>
-                  {c.total_value_cr != null
-                    ? `Rs.${Number(c.total_value_cr).toFixed(1)}Cr` : ""}
-                </span>
-                <span style={S.muted}>{c.latest_date || ""}</span>
-              </div>
-            ))
-          }
-        </Section>
+        {data && <>
+          <div style={S.tabs}>
+            {TABS.map((t, i) => (
+              <button key={i} onClick={() => setTab(i)} style={S.tab(tab === i)}>{t}</button>
+            ))}
+          </div>
 
-        {/* Big Insider Trades */}
-        <Section title="Big Insider Trades" count={bigTrades.length}>
-          {bigTrades.length === 0
-            ? <div style={S.empty}>No big trades in last 30 days</div>
-            : bigTrades.slice(0, 12).map((t: any, i: number) => {
-              const isBuy = (t.transaction_type || "").toUpperCase().includes("BUY");
-              return (
-                <div key={i} style={S.row}>
-                  <span style={S.sym}>{t.symbol}</span>
-                  <span style={isBuy ? S.pos : S.neg}>
-                    {t.transaction_type}
-                  </span>
-                  <span style={{...S.muted, marginLeft: "auto"}}>
-                    Rs.{t.value_cr != null
-                      ? Number(t.value_cr).toFixed(1)
-                      : t.value != null
-                        ? (Number(t.value)/1e7).toFixed(1) : "?"}Cr
-                  </span>
-                  <span style={S.muted}>{t.name?.slice(0, 18) || ""}</span>
-                </div>
-              );
-            })
-          }
-        </Section>
+          {tab === 0 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>BUY COUNT</th>
+                  <th style={S.th}>TOTAL VALUE</th>
+                  <th style={S.th}>INSIDERS</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen3_insider_clusters).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--bull)", fontWeight: 700 }}>{r.n_buys}</td>
+                      <td style={{ ...S.td, color: "var(--accent)" }}>{cr(r.total_value_cr)}</td>
+                      <td style={{ ...S.td, color: "var(--dim)", fontSize: 11 }}>{r.names}</td>
+                    </tr>
+                  ))}
+                  {filter(data.screen3_insider_clusters).length === 0 && (
+                    <tr><td colSpan={4} style={S.empty}>No insider clusters found</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
-        {/* Results Season */}
-        <Section title="Results Season" count={results.length}>
-          {results.length === 0
-            ? <div style={S.empty}>No recent results announcements</div>
-            : results.slice(0, 12).map((r: any, i: number) => (
-              <div key={i} style={S.row}>
-                <span style={S.sym}>{r.symbol}</span>
-                <span style={S.muted}>{r.announcement_date}</span>
-                <span style={{...S.muted, marginLeft: "auto",
-                  maxWidth: 220, overflow: "hidden",
-                  textOverflow: "ellipsis", whiteSpace: "nowrap" as const}}>
-                  {r.subject}
-                </span>
-              </div>
-            ))
-          }
-        </Section>
+          {tab === 1 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>DATE</th>
+                  <th style={S.th}>NAME</th>
+                  <th style={S.th}>TYPE</th>
+                  <th style={S.th}>QTY</th>
+                  <th style={S.th}>PRICE</th>
+                  <th style={S.th}>VALUE</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen4_big_trades).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--dim)" }}>{r.filing_date}</td>
+                      <td style={{ ...S.td, fontSize: 11 }}>{r.name}</td>
+                      <td style={S.td}>
+                        <span style={S.badge(r.transaction_type === "BUY")}>
+                          {r.transaction_type}
+                        </span>
+                      </td>
+                      <td style={S.td}>{r.quantity ? Number(r.quantity).toLocaleString("en-IN") : "--"}</td>
+                      <td style={S.td}>{fmt(r.price)}</td>
+                      <td style={{ ...S.td, color: "var(--accent)", fontWeight: 600 }}>
+                        {r.value ? (Number(r.value) / 1e7).toFixed(2) + " Cr" : "--"}
+                      </td>
+                    </tr>
+                  ))}
+                  {filter(data.screen4_big_trades).length === 0 && (
+                    <tr><td colSpan={7} style={S.empty}>No big trades found</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
-        {/* Dividend / Corporate Actions */}
-        <Section title="Dividend / Bonus / Split" count={divs.length}>
-          {divs.length === 0
-            ? <div style={S.empty}>No upcoming corporate actions</div>
-            : divs.slice(0, 12).map((d: any, i: number) => {
-              const kw  = (d.subject || "").toLowerCase();
-              const col = kw.includes("bonus") ? "#818cf8"
-                        : kw.includes("split") ? "#fbbf24"
-                        : "#22c55e";
-              return (
-                <div key={i} style={S.row}>
-                  <span style={S.sym}>{d.symbol}</span>
-                  <span style={S.pill(col)}>
-                    {kw.includes("bonus") ? "BONUS"
-                      : kw.includes("split") ? "SPLIT"
-                      : "DIV"}
-                  </span>
-                  <span style={{...S.muted, marginLeft: "auto"}}>
-                    {d.announcement_date}
-                  </span>
-                </div>
-              );
-            })
-          }
-        </Section>
+          {tab === 2 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>DATE</th>
+                  <th style={S.th}>SUBJECT</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen1_results_season).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--dim)" }}>{r.announcement_date}</td>
+                      <td style={{ ...S.td, fontSize: 11 }}>{r.subject}</td>
+                    </tr>
+                  ))}
+                  {filter(data.screen1_results_season).length === 0 && (
+                    <tr><td colSpan={3} style={S.empty}>No results announcements</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
-        {/* Upcoming Results */}
-        <Section title="Upcoming Results" count={upcoming.length}>
-          {upcoming.length === 0
-            ? <div style={S.empty}>No upcoming results detected</div>
-            : upcoming.slice(0, 12).map((u: any, i: number) => (
-              <div key={i} style={S.row}>
-                <span style={S.sym}>{u.symbol}</span>
-                <span style={S.muted}>last: {u.last_result_date || "?"}</span>
-                <span style={{...S.warn, marginLeft: "auto"}}>
-                  ~{u.days_since || "?"} days ago
-                </span>
-              </div>
-            ))
-          }
-        </Section>
+          {tab === 3 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>DATE</th>
+                  <th style={S.th}>SUBJECT</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen2_dividends).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--dim)" }}>{r.announcement_date}</td>
+                      <td style={{ ...S.td, fontSize: 11 }}>{r.subject}</td>
+                    </tr>
+                  ))}
+                  {filter(data.screen2_dividends).length === 0 && (
+                    <tr><td colSpan={3} style={S.empty}>No dividend announcements</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
-        {/* Post-Results Reactions */}
-        <Section title="Post-Results Price Reactions" count={reactions.length}>
-          {reactions.length === 0
-            ? <div style={S.empty}>No reactions data available</div>
-            : reactions.slice(0, 10).map((r: any, i: number) => {
-              const pct = parseFloat(r.price_reaction_pct || 0);
-              return (
-                <div key={i} style={S.row}>
-                  <span style={S.sym}>{r.symbol}</span>
-                  <span style={pct >= 0 ? S.pos : S.neg}>
-                    {pct >= 0 ? "+" : ""}{pct.toFixed(2)}%
-                  </span>
-                  <span style={S.muted}>{r.announcement_date}</span>
-                </div>
-              );
-            })
-          }
-        </Section>
+          {tab === 4 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>DATE</th>
+                  <th style={S.th}>5D RETURN</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen5_post_results_reaction).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--dim)" }}>{r.announcement_date}</td>
+                      <td style={{ ...S.td, color: bull(r.ret_5d), fontWeight: 600 }}>{pct(r.ret_5d)}</td>
+                    </tr>
+                  ))}
+                  {filter(data.screen5_post_results_reaction).length === 0 && (
+                    <tr><td colSpan={3} style={S.empty}>No post-results data</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
 
+          {tab === 5 && (
+            <div style={S.card}>
+              <table style={S.tbl}>
+                <thead><tr>
+                  <th style={S.th}>SYMBOL</th>
+                  <th style={S.th}>LAST RESULTS</th>
+                  <th style={S.th}>EXPECTED DUE</th>
+                </tr></thead>
+                <tbody>
+                  {filter(data.screen6_upcoming_results).map((r, i) => (
+                    <tr key={i} style={{ background: i%2===0?"transparent":"var(--surface)88" }}>
+                      <td style={{ ...S.td, ...S.sym }}>{r.symbol}</td>
+                      <td style={{ ...S.td, color: "var(--dim)" }}>{r.last_results_date}</td>
+                      <td style={{ ...S.td, color: "var(--warn)" }}>{r.expected_due}</td>
+                    </tr>
+                  ))}
+                  {filter(data.screen6_upcoming_results).length === 0 && (
+                    <tr><td colSpan={3} style={S.empty}>No upcoming results data</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {tab === 6 && data.llm_analysis && (
+            <pre style={S.pre}>{data.llm_analysis}</pre>
+          )}
+          {tab === 6 && !data.llm_analysis && (
+            <div style={{ color: "var(--dim)", padding: 20 }}>No LLM analysis -- run py agent_eta.py --send</div>
+          )}
+        </>}
       </div>
-
-      {/* LLM Analysis */}
-      {data.analysis && (
-        <div style={{ ...S.card, marginTop: 20 }}>
-          <div style={S.cardHdr}>LLM Analysis</div>
-          <pre style={{ fontSize: 12, color: "var(--muted)", whiteSpace: "pre-wrap" as const,
-            lineHeight: 1.6, margin: 0 }}>
-            {typeof data.analysis === "string"
-              ? data.analysis
-              : JSON.stringify(data.analysis, null, 2)}
-          </pre>
-        </div>
-      )}
     </div>
   );
 }

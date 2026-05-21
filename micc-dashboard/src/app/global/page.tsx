@@ -3,72 +3,72 @@ import NavBar from "@/components/NavBar";
 
 import { useEffect, useState, useCallback } from "react";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+//  Types 
 interface GlobalRow {
   symbol: string; date: string; close: number | null; pct_change: number | null;
   ret_5d?: number | null;
 }
 interface HistRow { date: string; close: number; pct_change: number | null; }
 
-// ── Universe metadata (category + display name) ───────────────────────────────
+//  Universe metadata (category + display name) 
 const META: Record<string, { name: string; cat: string; flag?: string }> = {
-  SPX:         { name: "S&P 500",         cat: "US",        flag: "🇺🇸" },
-  NDX:         { name: "Nasdaq 100",       cat: "US",        flag: "🇺🇸" },
-  DJIA:        { name: "Dow Jones",        cat: "US",        flag: "🇺🇸" },
-  RUT:         { name: "Russell 2000",     cat: "US",        flag: "🇺🇸" },
-  SP500VIX:    { name: "VIX",              cat: "Volatility",flag: "⚡" },
-  INDIAVIX:    { name: "India VIX",        cat: "Volatility",flag: "⚡" },
-  NIFTY50:     { name: "Nifty 50",         cat: "India",     flag: "🇮🇳" },
-  NIFTYBANK:   { name: "Nifty Bank",       cat: "India",     flag: "🇮🇳" },
-  SENSEX:      { name: "Sensex",           cat: "India",     flag: "🇮🇳" },
-  NIFTYIT:     { name: "Nifty IT",         cat: "India",     flag: "🇮🇳" },
-  NIFTYMID100: { name: "Nifty Midcap",     cat: "India",     flag: "🇮🇳" },
-  NIFTYFMCG:   { name: "Nifty FMCG",       cat: "India",     flag: "🇮🇳" },
-  NIFTYAUTO:   { name: "Nifty Auto",        cat: "India",     flag: "🇮🇳" },
-  DAX:         { name: "DAX",              cat: "Europe",    flag: "🇩🇪" },
-  FTSE100:     { name: "FTSE 100",         cat: "Europe",    flag: "🇬🇧" },
-  CAC40:       { name: "CAC 40",           cat: "Europe",    flag: "🇫🇷" },
-  EUROSTOXX50: { name: "Euro Stoxx 50",    cat: "Europe",    flag: "🇪🇺" },
-  AEX:         { name: "AEX",              cat: "Europe",    flag: "🇳🇱" },
-  SMI:         { name: "SMI",              cat: "Europe",    flag: "🇨🇭" },
-  IBEX35:      { name: "IBEX 35",          cat: "Europe",    flag: "🇪🇸" },
-  MIB:         { name: "FTSE MIB",         cat: "Europe",    flag: "🇮🇹" },
-  Nikkei225:   { name: "Nikkei 225",       cat: "Asia",      flag: "🇯🇵" },
-  HangSeng:    { name: "Hang Seng",        cat: "Asia",      flag: "🇭🇰" },
-  Shanghai:    { name: "Shanghai",         cat: "Asia",      flag: "🇨🇳" },
-  CSI300:      { name: "CSI 300",          cat: "Asia",      flag: "🇨🇳" },
-  Kospi:       { name: "KOSPI",            cat: "Asia",      flag: "🇰🇷" },
-  ASX200:      { name: "ASX 200",          cat: "Asia",      flag: "🇦🇺" },
-  Taiwan:      { name: "Taiwan",           cat: "Asia",      flag: "🇹🇼" },
-  Straits:     { name: "Straits Times",    cat: "Asia",      flag: "🇸🇬" },
-  Jakarta:     { name: "Jakarta",          cat: "Asia",      flag: "🇮🇩" },
-  Bovespa:     { name: "Bovespa",          cat: "LatAm",     flag: "🇧🇷" },
-  IPC:         { name: "IPC Mexico",       cat: "LatAm",     flag: "🇲🇽" },
-  Gold:        { name: "Gold",             cat: "Commodity", flag: "🥇" },
-  Silver:      { name: "Silver",           cat: "Commodity", flag: "🥈" },
-  CrudeWTI:    { name: "Crude WTI",        cat: "Commodity", flag: "🛢" },
-  BrentCrude:  { name: "Brent Crude",      cat: "Commodity", flag: "🛢" },
-  NatGas:      { name: "Natural Gas",      cat: "Commodity", flag: "🔥" },
-  Copper:      { name: "Copper",           cat: "Commodity", flag: "🟤" },
-  Wheat:       { name: "Wheat",            cat: "Commodity", flag: "🌾" },
-  Palladium:   { name: "Palladium",        cat: "Commodity", flag: "⚗️" },
-  DXY:         { name: "DXY (USD Index)",  cat: "FX",        flag: "💵" },
-  USDINR:      { name: "USD/INR",          cat: "FX",        flag: "₹"  },
-  EURUSD:      { name: "EUR/USD",          cat: "FX",        flag: "🇪🇺" },
-  USDJPY:      { name: "USD/JPY",          cat: "FX",        flag: "🇯🇵" },
-  GBPUSD:      { name: "GBP/USD",          cat: "FX",        flag: "🇬🇧" },
-  USDCNY:      { name: "USD/CNY",          cat: "FX",        flag: "🇨🇳" },
-  USDBRL:      { name: "USD/BRL",          cat: "FX",        flag: "🇧🇷" },
-  US10Y:       { name: "US 10Y Yield",     cat: "Rates",     flag: "📈" },
-  US2Y:        { name: "US 2Y Yield",      cat: "Rates",     flag: "📈" },
-  US30Y:       { name: "US 30Y Yield",     cat: "Rates",     flag: "📈" },
-  Bitcoin:     { name: "Bitcoin",          cat: "Crypto",    flag: "₿"  },
-  Ethereum:    { name: "Ethereum",         cat: "Crypto",    flag: "Ξ"  },
+  SPX:         { name: "S&P 500",         cat: "US" },
+  NDX:         { name: "Nasdaq 100",       cat: "US" },
+  DJIA:        { name: "Dow Jones",        cat: "US" },
+  RUT:         { name: "Russell 2000",     cat: "US" },
+  SP500VIX:    { name: "VIX",              cat: "Volatility" },
+  INDIAVIX:    { name: "India VIX",        cat: "Volatility" },
+  NIFTY50:     { name: "Nifty 50",         cat: "India" },
+  NIFTYBANK:   { name: "Nifty Bank",       cat: "India" },
+  SENSEX:      { name: "Sensex",           cat: "India" },
+  NIFTYIT:     { name: "Nifty IT",         cat: "India" },
+  NIFTYMID100: { name: "Nifty Midcap",     cat: "India" },
+  NIFTYFMCG:   { name: "Nifty FMCG",       cat: "India" },
+  NIFTYAUTO:   { name: "Nifty Auto",        cat: "India" },
+  DAX:         { name: "DAX",              cat: "Europe" },
+  FTSE100:     { name: "FTSE 100",         cat: "Europe" },
+  CAC40:       { name: "CAC 40",           cat: "Europe" },
+  EUROSTOXX50: { name: "Euro Stoxx 50",    cat: "Europe" },
+  AEX:         { name: "AEX",              cat: "Europe" },
+  SMI:         { name: "SMI",              cat: "Europe" },
+  IBEX35:      { name: "IBEX 35",          cat: "Europe" },
+  MIB:         { name: "FTSE MIB",         cat: "Europe" },
+  Nikkei225:   { name: "Nikkei 225",       cat: "Asia" },
+  HangSeng:    { name: "Hang Seng",        cat: "Asia" },
+  Shanghai:    { name: "Shanghai",         cat: "Asia" },
+  CSI300:      { name: "CSI 300",          cat: "Asia" },
+  Kospi:       { name: "KOSPI",            cat: "Asia" },
+  ASX200:      { name: "ASX 200",          cat: "Asia" },
+  Taiwan:      { name: "Taiwan",           cat: "Asia" },
+  Straits:     { name: "Straits Times",    cat: "Asia" },
+  Jakarta:     { name: "Jakarta",          cat: "Asia" },
+  Bovespa:     { name: "Bovespa",          cat: "LatAm" },
+  IPC:         { name: "IPC Mexico",       cat: "LatAm" },
+  Gold:        { name: "Gold",             cat: "Commodity" },
+  Silver:      { name: "Silver",           cat: "Commodity" },
+  CrudeWTI:    { name: "Crude WTI",        cat: "Commodity" },
+  BrentCrude:  { name: "Brent Crude",      cat: "Commodity" },
+  NatGas:      { name: "Natural Gas",      cat: "Commodity" },
+  Copper:      { name: "Copper",           cat: "Commodity" },
+  Wheat:       { name: "Wheat",            cat: "Commodity" },
+  Palladium:   { name: "Palladium",        cat: "Commodity" },
+  DXY:         { name: "DXY (USD Index)",  cat: "FX" },
+  USDINR:      { name: "USD/INR",          cat: "FX"  },
+  EURUSD:      { name: "EUR/USD",          cat: "FX" },
+  USDJPY:      { name: "USD/JPY",          cat: "FX" },
+  GBPUSD:      { name: "GBP/USD",          cat: "FX" },
+  USDCNY:      { name: "USD/CNY",          cat: "FX" },
+  USDBRL:      { name: "USD/BRL",          cat: "FX" },
+  US10Y:       { name: "US 10Y Yield",     cat: "Rates" },
+  US2Y:        { name: "US 2Y Yield",      cat: "Rates" },
+  US30Y:       { name: "US 30Y Yield",     cat: "Rates" },
+  Bitcoin:     { name: "Bitcoin",          cat: "Crypto"  },
+  Ethereum:    { name: "Ethereum",         cat: "Crypto"  },
 };
 
 const CATS = ["All","US","India","Europe","Asia","LatAm","Commodity","FX","Rates","Volatility","Crypto"];
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+//  Helpers 
 const pct  = (v: number | null | undefined) =>
   v == null ? "—" : `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
 const clr  = (v: number | null | undefined, invert = false) =>
@@ -84,7 +84,7 @@ const fmtClose = (v: number | null, sym: string) => {
        : v.toFixed(4);
 };
 
-// ── Mini sparkline SVG ────────────────────────────────────────────────────────
+//  Mini sparkline SVG 
 function Spark({ hist, color }: { hist: number[]; color: string }) {
   if (!hist || hist.length < 2) return <span style={{ color: "var(--border2)" }}>—</span>;
   const W = 60, H = 20;
@@ -99,13 +99,13 @@ function Spark({ hist, color }: { hist: number[]; color: string }) {
   );
 }
 
-// ── Global index row ──────────────────────────────────────────────────────────
+//  Global index row 
 function IndexRow({
   row, onClick, selected,
 }: {
   row: GlobalRow; onClick: () => void; selected: boolean;
 }) {
-  const meta  = META[row.symbol] || { name: row.symbol, cat: "Other", flag: "🌍" };
+  const meta  = META[row.symbol] || { name: row.symbol, cat: "Other" };
   const dClr  = clr(row.pct_change);
   const wClr  = clr(row.ret_5d);
   const isVix = meta.cat === "Volatility";
@@ -117,7 +117,7 @@ function IndexRow({
       transition: "background 0.15s",
     }}>
       <td style={{ padding: "8px 10px", fontFamily: "monospace", color: "var(--accent)", fontSize: 12, fontWeight: 700 }}>
-        {meta.flag} {row.symbol}
+         {row.symbol}
       </td>
       <td style={{ padding: "8px 10px", color: "var(--muted)", fontSize: 12 }}>
         {meta.name}
@@ -144,14 +144,14 @@ function IndexRow({
   );
 }
 
-// ── Mini chart for selected symbol ────────────────────────────────────────────
+//  Mini chart for selected symbol 
 function SymbolChart({ symbol, onClose }: { symbol: string; onClose: () => void }) {
   const [hist, setHist]     = useState<HistRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [hovered, setHovered] = useState<number | null>(null);
   const [lockA, setLockA]   = useState<number | null>(null);
   const [lockB, setLockB]   = useState<number | null>(null);
-  const meta = META[symbol] || { name: symbol, cat: "Other", flag: "🌍" };
+  const meta = META[symbol] || { name: symbol, cat: "Other" };
 
   useEffect(() => {
     setLoading(true);
@@ -200,7 +200,7 @@ function SymbolChart({ symbol, onClose }: { symbol: string; onClose: () => void 
       borderRadius: 4, padding: "16px 20px", marginBottom: 16,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-        <span style={{ fontSize: 16 }}>{meta.flag}</span>
+        <span style={{ fontSize: 16 }}></span>
         <span style={{ fontWeight: 800, fontSize: 15, color: "var(--text)" }}>
           {symbol} — {meta.name}
         </span>
@@ -215,7 +215,7 @@ function SymbolChart({ symbol, onClose }: { symbol: string; onClose: () => void 
         <button onClick={onClose} style={{
           marginLeft: "auto", background: "none", border: "none",
           color: "var(--muted)", cursor: "pointer", fontSize: 18,
-        }}>✕</button>
+        }}></button>
       </div>
 
       <svg width={W} height={H} style={{ cursor: "crosshair", overflow: "visible" }}
@@ -292,16 +292,16 @@ function SymbolChart({ symbol, onClose }: { symbol: string; onClose: () => void 
         {(lockA != null || lockB != null) && (
           <button onClick={() => { setLockA(null); setLockB(null); }}
             style={{ fontSize: 10, color: "var(--muted)", background: "none",
-              border: "none", cursor: "pointer" }}>✕ clear</button>
+              border: "none", cursor: "pointer" }}> clear</button>
         )}
       </div>
     </div>
   );
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
+// 
 // MAIN PAGE
-// ═════════════════════════════════════════════════════════════════════════════
+// 
 export default function GlobalPage() {
   const [rows,     setRows]     = useState<GlobalRow[]>([]);
   const [loading,  setLoading]  = useState(true);
@@ -368,14 +368,14 @@ export default function GlobalPage() {
       color: "var(--text)", fontFamily: "'Space Grotesk',sans-serif",
     }}>
       <NavBar />
-      {/* ── Header ── */}
+      {/*  Header  */}
       <div style={{
         padding: "18px 28px 14px", borderBottom: "1px solid #1e293b",
         display: "flex", alignItems: "center", flexWrap: "wrap", gap: 16,
       }}>
         <div>
           <h1 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: "var(--text)" }}>
-            🌍 Global Markets
+             Global Markets
           </h1>
           <p style={{ margin: "3px 0 0", fontSize: 11, color: "var(--muted)" }}>
             52 symbols · Equities · Commodities · FX · Rates · Crypto
@@ -385,7 +385,7 @@ export default function GlobalPage() {
         <button onClick={load} disabled={loading} style={{
           padding: "6px 14px", background: "var(--border2)", border: "none",
           borderRadius: 7, color: "var(--muted)", cursor: "pointer", fontSize: 12,
-        }}>↺ Refresh</button>
+        }}> Refresh</button>
 
         {/* Summary chips */}
         <div style={{ marginLeft: "auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -408,7 +408,7 @@ export default function GlobalPage() {
         </div>
       </div>
 
-      {/* ── Top movers strip ── */}
+      {/*  Top movers strip  */}
       {topGainer && topLoser && (
         <div style={{
           padding: "8px 28px", background: "var(--bg)",
@@ -416,22 +416,22 @@ export default function GlobalPage() {
         }}>
           <span style={{ color: "var(--muted)" }}>Top mover:</span>
           <span style={{ color: "var(--pos)", fontWeight: 700 }}>
-            {META[topGainer.symbol]?.flag} {topGainer.symbol} {pct(topGainer.pct_change)}
+             {topGainer.symbol} {pct(topGainer.pct_change)}
           </span>
           <span style={{ color: "var(--muted)" }}>Biggest drop:</span>
           <span style={{ color: "var(--neg)", fontWeight: 700 }}>
-            {META[topLoser.symbol]?.flag} {topLoser.symbol} {pct(topLoser.pct_change)}
+             {topLoser.symbol} {pct(topLoser.pct_change)}
           </span>
         </div>
       )}
 
       <div style={{ padding: "16px 28px" }}>
-        {/* ── Selected chart ── */}
+        {/*  Selected chart  */}
         {selected && (
           <SymbolChart symbol={selected} onClose={() => setSelected(null)} />
         )}
 
-        {/* ── Category tabs + search ── */}
+        {/*  Category tabs + search  */}
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
           {CATS.map(c => (
             <button key={c} onClick={() => setCat(c)} style={{
@@ -453,7 +453,7 @@ export default function GlobalPage() {
           />
         </div>
 
-        {/* ── Table ── */}
+        {/*  Table  */}
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
