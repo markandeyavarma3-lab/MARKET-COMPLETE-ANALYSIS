@@ -1694,6 +1694,59 @@ async def cmd_status_full(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f'Error: {e}')
 
+
+async def cmd_hmm(update, context):
+    """Show current HMM regime."""
+    import json
+    from pathlib import Path
+    try:
+        p = Path(r"D:\MICC\agents\hmm\last_report.json")
+        if not p.exists():
+            await update.message.reply_text("No HMM data. Run: py agent_hmm.py")
+            return
+        d = json.loads(p.read_text())
+        reg  = d.get("current_regime", "--")
+        conf = d.get("confidence", 0)
+        bull = d.get("bull_prob", 0)
+        side = d.get("sideways_prob", 0)
+        bear = d.get("bear_prob", 0)
+        ico  = {"BULL": "UP", "BEAR": "DN", "SIDEWAYS": "--"}.get(reg, "--")
+        msg  = (f"HMM Regime\n"
+                f"{ico} {reg}  ({conf:.0%} confidence)\n\n"
+                f"Bull     : {bull:.0%}\n"
+                f"Sideways : {side:.0%}\n"
+                f"Bear     : {bear:.0%}\n\n"
+                f"Updated  : {d.get('date', '--')}")
+        await update.message.reply_text(msg)
+    except Exception as e:
+        await update.message.reply_text(f"Error: {e}")
+
+
+async def cmd_xgb(update, context):
+    """Show top XGBoost conviction picks."""
+    import sqlite3
+    DB = r"D:\marketDB\db\market.db"
+    try:
+        conn = sqlite3.connect(DB, timeout=10)
+        rows = conn.execute(
+            "SELECT x.symbol, x.xgb_score, COALESCE(c.conviction_score,0) AS conv"
+            " FROM symbol_conviction_xgb x"
+            " LEFT JOIN symbol_conviction c ON c.symbol=x.symbol"
+            " WHERE x.xgb_score >= 55"
+            " ORDER BY x.xgb_score DESC LIMIT 15"
+        ).fetchall()
+        conn.close()
+        if not rows:
+            await update.message.reply_text("No XGB scores. Run: py train_conviction_xgb.py --score")
+            return
+        lines = ["XGBoost Top Picks (ML model)\n"]
+        for sym, xgb_s, conv in rows:
+            lines.append(f"  {sym:<14} XGB={xgb_s:.0f}  Conv={conv:.0f}")
+        await update.message.reply_text("\n".join(lines))
+    except Exception as e:
+        await update.message.reply_text(f"Error: {e}")
+
+
 def main():
     if not BOT_TOKEN:
         print("\n[ERROR] TELEGRAM_BOT_TOKEN not set.")
@@ -1737,6 +1790,8 @@ def main():
     app.add_handler(CommandHandler("conviction", cmd_conviction))
     app.add_handler(CommandHandler("portfolio", cmd_portfolio))
     app.add_handler(CommandHandler("exit", cmd_exit))
+    application.add_handler(CommandHandler("hmm", cmd_hmm))
+    application.add_handler(CommandHandler("xgb", cmd_xgb))
     app.add_handler(CommandHandler("status", cmd_status_full  # upgraded,  cmd_status))
 
     if CHAT_ID:

@@ -29,6 +29,7 @@ from pathlib import Path
 import pandas as pd
 
 import sys
+no_llm = "--no-llm" in sys.argv
 sys.path.insert(0, str(Path(__file__).parent))
 from micc_data import call_llm, now_ist, send_telegram_chunks
 
@@ -478,6 +479,9 @@ def run_eta(send: bool = False) -> dict:
     upcoming = screen_upcoming_results(ann)
     print(f"    {len(upcoming)} stocks with results due soon")
 
+    if no_llm:
+      llm_analysis = "[LLM skipped -- use --no-llm flag]"
+  else:
     print("  LLM analysis...")
     prompt   = build_prompt(results_season, dividends, clusters,
                              big_trades, reactions, upcoming)

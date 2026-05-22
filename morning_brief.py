@@ -30,59 +30,54 @@ def send(msg):
 # ---- Data getters -------------------------------------------------------
 
 def get_global_snapshot():
-    # Flexible alias map: display_label -> list of possible DB names
-    WANT = {
-        'Nifty 50 ':  ['NIFTY50','NIFTY 50','^NSEI','Nifty 50','NIFTY'],
-        'S&P 500  ':  ['SPX','S&P 500','^GSPC','SP500','S&P500'],
-        'Dow Jones':  ['DJI','Dow Jones','^DJI','DJIA'],
-        'Nasdaq   ':  ['NDX','Nasdaq','^NDX','^IXIC','NASDAQ'],
-        'VIX      ':  ['VIX','^VIX','CBOE VIX','CBOE Volatility Index'],
-        'IndiaVIX ':  ['IndiaVIX','INDIA VIX','India VIX','^INDIAVIX','INDIAVIX'],
-        'US 10Y   ':  ['US10Y','US 10Y','TNX','^TNX','US 10-Yr'],
-        'Gold     ':  ['Gold','GOLD','GC=F','XAU','Gold Futures'],
-        'Crude WTI':  ['CrudeWTI','Crude WTI','WTI','CL=F','Crude Oil WTI'],
-        'USD/INR  ':  ['USDINR','USD/INR','USDINR=X','USD-INR'],
-        'Bitcoin  ':  ['Bitcoin','BITCOIN','BTC-USD','BTC','BTC/USD'],
-        'Nikkei   ':  ['Nikkei','NIKKEI','^N225','Nikkei 225'],
-        'DAX      ':  ['DAX','^GDAXI','DAX Index'],
-        'SGX Nifty':  ['SGXNifty','SGX Nifty','SGXNIFTY'],
-    }
+    # Exact keys from global_indices_daily — verified from DB on 2026-05-23
+    WANT = [
+        ("Nifty 50 ", "NIFTY50"),
+        ("NiftyBank", "NIFTYBANK"),
+        ("S&P 500  ", "SPX"),
+        ("Nasdaq   ", "NDX"),
+        ("VIX      ", "VIX"),
+        ("IndiaVIX ", "IndiaVIX"),
+        ("DXY      ", "DXY"),
+        ("US 10Y   ", "US10Y"),
+        ("Gold     ", "Gold"),
+        ("CrudeWTI ", "CrudeWTI"),
+        ("USD/INR  ", "USDINR"),
+        ("Bitcoin  ", "Bitcoin"),
+    ]
     try:
-        conn = sqlite3.connect(DB_P, timeout=10)
-        avail = {r[0] for r in conn.execute(
-            'SELECT DISTINCT symbol FROM global_indices_daily'
-        ).fetchall()}
-        to_query = {}  # label -> db_symbol
-        for label, candidates in WANT.items():
-            for c in candidates:
-                if c in avail:
-                    to_query[label] = c
-                    break
-        if not to_query:
-            log(f'global_snapshot: 0 matches. DB has: {sorted(avail)[:15]}')
-            conn.close(); return []
-        syms = list(to_query.values())
-        ph   = ','.join('?'*len(syms))
-        rows = conn.execute(
-            f'SELECT symbol,close,pct_change FROM global_indices_daily'
-            f' WHERE symbol IN ({ph})'
-            f' AND date=(SELECT MAX(date) FROM global_indices_daily WHERE symbol=global_indices_daily.symbol)',
-            syms
+        conn  = sqlite3.connect(DB_P, timeout=10)
+        syms  = [s for _, s in WANT]
+        ph    = ",".join("?" * len(syms))
+        # Get latest date per symbol then join
+        rows  = conn.execute(
+            "SELECT g.symbol, g.close, g.pct_change"
+            " FROM global_indices_daily g"
+            " INNER JOIN ("
+            "   SELECT symbol, MAX(date) AS md"
+            "   FROM global_indices_daily"
+            f"  WHERE symbol IN ({ph})"
+            "   GROUP BY symbol"
+            " ) mx ON mx.symbol=g.symbol AND mx.md=g.date"
+            f" WHERE g.symbol IN ({ph})",
+            syms + syms
         ).fetchall()
         conn.close()
-        data = {r[0]:(r[1],r[2]) for r in rows}
+        data = {r[0]: (r[1], r[2]) for r in rows}
         result = []
-        for label, db_sym in to_query.items():
-            if db_sym not in data: continue
-            close, chg = data[db_sym]
-            if close is None: continue
-            ico   = 'UP' if (chg or 0) > 0.3 else 'DN' if (chg or 0) < -0.3 else '--'
-            chg_s = f'{chg:+.2f}%' if chg is not None else ''
-            result.append(f'  {ico} `{label}` {close:,.2f}  {chg_s}')
-        log(f'global_snapshot: {len(result)}/{len(to_query)} symbols found')
+        for label, sym in WANT:
+            if sym not in data:
+                continue
+            close, chg = data[sym]
+            if close is None:
+                continue
+            ico   = "UP" if (chg or 0) > 0.3 else "DN" if (chg or 0) < -0.3 else "--"
+            chg_s = f"{chg:+.2f}%" if chg is not None else ""
+            result.append(f"  {ico} `{label}` {close:,.2f}  {chg_s}")
+        log(f"global_snapshot: {len(result)}/{len(WANT)} symbols")
         return result
     except Exception as e:
-        log(f'global_snapshot error: {e}')
+        log(f"global_snapshot error: {e}")
         return []
 
 
@@ -220,7 +215,7 @@ def main():
     print('='*50)
 
     log('Running agents...')
-    for script, tout, extra_args in [('agent_fusion.py',120,[]),("agent_eta.py",300,["--no-llm"]),("agent_alert.py",60,[])]:
+    for script, tout, extra_args in [('agent_fusion.py',120,[]),('agent_eta.py',300,['--no-llm']),('agent_alert.py',60,[])]:
         ok = run_agent(script, timeout=tout, extra_args=extra_args)
         log(f'  {script}: {"OK" if ok else "FAILED"}')
 
