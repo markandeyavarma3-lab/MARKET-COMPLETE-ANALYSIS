@@ -190,6 +190,30 @@ def get_alerts():
 
 # ---- Main ---------------------------------------------------------------
 
+
+def get_hmm_regime():
+    try:
+        p = DA / 'agents' / 'hmm' / 'last_report.json'
+        if not p.exists(): return None
+        return json.loads(p.read_text(encoding='utf-8'))
+    except Exception:
+        return None
+
+def get_xgb_top(n=5):
+    try:
+        conn = sqlite3.connect(DB_P, timeout=10)
+        rows = conn.execute(
+            'SELECT x.symbol, x.xgb_score, COALESCE(c.conviction_score,0) AS conv'
+            ' FROM symbol_conviction_xgb x'
+            ' LEFT JOIN symbol_conviction c ON c.symbol=x.symbol'
+            ' WHERE x.xgb_score >= 60'
+            ' ORDER BY x.xgb_score DESC LIMIT ?',
+            (n,)
+        ).fetchall()
+        conn.close()
+        return rows
+    except Exception:
+        return []
 def main():
     today = datetime.today().strftime('%A, %d %b %Y')
     print(f'MICC Morning Brief -- {today}')
@@ -201,6 +225,17 @@ def main():
         log(f'  {script}: {"OK" if ok else "FAILED"}')
 
     lines = [f'*MICC Morning Brief -- {today}*', '']
+
+    # 0. HMM Regime
+    hmm = get_hmm_regime()
+    if hmm:
+        reg   = hmm.get('current_regime', '--')
+        conf  = hmm.get('confidence', 0)
+        bullp = hmm.get('bull_prob', 0)
+        bearp = hmm.get('bear_prob', 0)
+        ico   = {'BULL':'UP','BEAR':'DN','SIDEWAYS':'--'}.get(reg, '--')
+        lines.append(f'*Regime (HMM): {ico} {reg}* ({conf:.0%} conf | Bull={bullp:.0%} Bear={bearp:.0%})')
+        lines.append('')
 
     # 1. Global markets
     snap = get_global_snapshot()
@@ -225,6 +260,14 @@ def main():
         lines += ['_Layers: Beta/Insider/Watch/Season/Conviction/Quant_', '']
     else:
         lines += ['_Fusion: no data -- run agent_fusion.py_', '']
+
+    # 2b. XGB ML picks
+    xgb_picks = get_xgb_top(n=5)
+    if xgb_picks:
+        lines.append('*ML Picks (XGBoost >60):*')
+        for sym, xgb_s, conv in xgb_picks:
+            lines.append(f'  `{str(sym):<12}` XGB={xgb_s:.0f}  Conv={conv:.0f}')
+        lines.append('')
 
     # 3. Quality picks (ROCE+ROE fundamentals)
     quality = get_quality_picks(n=5)

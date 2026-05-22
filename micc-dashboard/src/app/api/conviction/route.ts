@@ -59,8 +59,10 @@ export async function GET(req: Request) {
       t.macd_signal,
       ROUND(CAST(t.atr_14_pct        AS REAL),2)  AS atr_14_pct,
       ROUND(CAST(t.pct_from_52w_high AS REAL),1)  AS pct_from_52w_high,
-      sd.close                                     AS latest_close
+      sd.close                                     AS latest_close,
+      ROUND(CAST(x.xgb_score AS REAL),1)          AS xgb_score
     FROM symbol_conviction c
+    LEFT JOIN symbol_conviction_xgb x ON x.symbol = c.symbol
     LEFT JOIN symbol_technicals t ON t.symbol = c.symbol
     LEFT JOIN (
       SELECT symbol, close

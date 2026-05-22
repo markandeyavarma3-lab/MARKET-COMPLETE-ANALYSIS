@@ -23,6 +23,74 @@ const bull = (v: unknown) => Number(v) >= 0 ? "var(--bull)" : "var(--bear)";
 const rs   = (v: unknown) => {
   if (v == null) return "--";
   const n = Number(v);
+  function CorrHeatmap() {
+    if (!corrData || !corrData.symbols || corrData.symbols.length < 2) {
+      return <div style={{ padding: 40, textAlign: "center", color: "var(--dim)", fontSize: 12 }}>
+        Need 2+ open positions for correlation matrix.
+      </div>;
+    }
+    const { symbols, matrix } = corrData;
+    const n = symbols.length;
+    const cellSize = Math.min(80, Math.floor(560 / n));
+    const W = cellSize * n + 120;
+    const H = cellSize * n + 80;
+    const getCorr = (a: string, b: string) =>
+      matrix.find(m => m.symA === a && m.symB === b)?.corr ?? null;
+    const corrColor = (c: number | null) => {
+      if (c === null) return "var(--muted)";
+      if (c >= 0.7)  return "#f87171";  // high positive = bad (concentrated)
+      if (c >= 0.3)  return "#fbbf24";  // moderate
+      if (c >= -0.3) return "#34d399";  // low = good diversification
+      return "#60a5fa";                  // negative = excellent hedge
+    };
+    return (
+      <div>
+        <div style={{ fontSize: 10, color: "var(--dim)", letterSpacing: 1, marginBottom: 12 }}>
+          POSITION CORRELATION MATRIX  (90d daily returns)
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <svg width={W} height={H} style={{ fontFamily: "JetBrains Mono, monospace" }}>
+            {/* Column headers */}
+            {symbols.map((sym, j) => (
+              <text key={j} x={120 + j * cellSize + cellSize/2} y={60}
+                textAnchor="middle" fontSize={10} fill="var(--dim)"
+                transform={`rotate(-45, ${120 + j*cellSize + cellSize/2}, 60)`}>
+                {sym.slice(0,8)}
+              </text>
+            ))}
+            {/* Row labels + cells */}
+            {symbols.map((symA, i) => (
+              <g key={i}>
+                <text x={110} y={80 + i * cellSize + cellSize/2 + 4}
+                  textAnchor="end" fontSize={10} fill="var(--dim)">{symA.slice(0,8)}</text>
+                {symbols.map((symB, j) => {
+                  const c = getCorr(symA, symB);
+                  const bg = corrColor(c);
+                  return (
+                    <g key={j}>
+                      <rect x={120 + j*cellSize} y={70 + i*cellSize}
+                        width={cellSize-2} height={cellSize-2} fill={bg} opacity={0.85} rx={2} />
+                      <text x={120 + j*cellSize + cellSize/2} y={70 + i*cellSize + cellSize/2 + 4}
+                        textAnchor="middle" fontSize={Math.max(9, cellSize/6)} fill="#000" fontWeight={600}>
+                        {c !== null ? c.toFixed(2) : "--"}
+                      </text>
+                    </g>
+                  );
+                })}
+              </g>
+            ))}
+          </svg>
+        </div>
+        <div style={{ display: "flex", gap: 16, marginTop: 12, fontSize: 10, color: "var(--dim)" }}>
+          <span><span style={{ color: "#34d399" }}>GREEN</span>  low correlation (good diversification)</span>
+          <span><span style={{ color: "#fbbf24" }}>YELLOW</span> moderate correlation</span>
+          <span><span style={{ color: "#f87171" }}>RED</span>    high correlation (concentrated risk)</span>
+          <span><span style={{ color: "#60a5fa" }}>BLUE</span>   negative correlation (hedge)</span>
+        </div>
+      </div>
+    );
+  }
+
   return (n >= 0 ? "+" : "") + n.toLocaleString("en-IN", { maximumFractionDigits: 0 });
 };
 
@@ -128,6 +196,8 @@ export default function PortfolioPage() {
   const [loading, setL]   = useState(true);
   const [error, setE]     = useState("");
   const [refresh, setRef] = useState(0);
+  const [corrData, setCorrData] = useState<{symbols:string[];matrix:{symA:string;symB:string;corr:number|null}[]}|null>(null);
+  const [activeTab, setActiveTab] = useState<"positions"|"chart"|"correlation">("positions");
 
   useEffect(() => {
     setL(true);
@@ -135,6 +205,10 @@ export default function PortfolioPage() {
       .then(r => r.json())
       .then(d => { setData(d); setL(false); })
       .catch(e => { setE(e.message); setL(false); });
+    fetch("/api/portfolio/correlation")
+      .then(r => r.json())
+      .then(d => setCorrData(d))
+      .catch(() => {});
   }, [refresh]);
 
   const S: Record<string, React.CSSProperties> = {
@@ -172,6 +246,15 @@ export default function PortfolioPage() {
       <NavBar />
       <div style={S.sub}>
         <span style={S.stitle}>PORTFOLIO  /  POSITIONS & P&L</span>
+        {["positions","chart","correlation"].map(t => (
+          <button key={t} onClick={() => setActiveTab(t as typeof activeTab)}
+            style={{ padding:"3px 10px", fontSize:10, letterSpacing:1, cursor:"pointer",
+              border:"1px solid "+(activeTab===t?"var(--accent)":"var(--border)"),
+              borderRadius:4, background:activeTab===t?"var(--accent)22":"transparent",
+              color:activeTab===t?"var(--accent)":"var(--dim)" }}>
+            {t.toUpperCase()}
+          </button>
+        ))}
         <button onClick={() => setRef(r => r + 1)} style={S.btn}>Refresh</button>
         {data && <span style={{ fontSize: 10, color: "var(--dim)", marginLeft: "auto" }}>
           {positions.length} positions
@@ -209,11 +292,9 @@ export default function PortfolioPage() {
             </div>
           </div>
 
-          {/* Equity curve */}
-          <EquityCurve positions={positions} />
+          {activeTab === "chart" && <EquityCurve positions={positions} />}
 
-          {/* Positions table */}
-          {positions.length === 0 ? (
+          {activeTab === "positions" && positions.length === 0 ? (
             <div style={{ ...S.card, padding: 40, textAlign: "center", color: "var(--dim)" }}>
               No positions yet. Add via: py D:\MICC\agent_exit.py --add SYMBOL PRICE QTY
             </div>
@@ -261,8 +342,7 @@ export default function PortfolioPage() {
             </div>
           )}
 
-          {/* Add position hint */}
-          <div style={S.hint}>
+          {activeTab === "positions" && <div style={S.hint}>
             <div style={{ fontSize: 10, letterSpacing: 1, color: "var(--dim)", marginBottom: 8 }}>HOW TO ADD A POSITION</div>
             <div>py D:\MICC\agent_exit.py --add RELIANCE 1450.00 10</div>
             <div style={{ marginTop: 8, color: "var(--muted)" }}>

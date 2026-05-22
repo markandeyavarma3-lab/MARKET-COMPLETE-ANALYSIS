@@ -222,7 +222,7 @@ export default function ConvictionPage() {
                                borderBottom:"2px solid var(--border)",
                                fontFamily:"monospace",fontSize:10,color:"var(--dim)",textAlign:"left"}}>#</th>
                   <Th col="symbol"           label="SYMBOL"/>
-                  <Th col="conviction_score" label="CONVICTION"/>
+                  <Th col="conviction_score" label="CONVICTION", "XGB"/>
                   <th style={{padding:"8px 10px",background:"var(--surface)",
                                borderBottom:"2px solid var(--border)",
                                fontFamily:"monospace",fontSize:10,color:"var(--dim)"}}>LAYERS</th>
