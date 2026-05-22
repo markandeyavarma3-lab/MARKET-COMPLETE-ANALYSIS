@@ -153,8 +153,19 @@ nr = qdb(
     "SELECT closing_index_value AS close FROM market_snapshot "
     "WHERE index_name='NIFTY 50' ORDER BY date DESC LIMIT 1"
 )
-nifty  = float(nr[0]["close"]) if nr else 0.0
-regime = "BULLISH" if nifty > 22000 else "SIDEWAYS" if nifty > 18000 else "BEARISH" if nifty > 0 else "UNKNOWN"
+nifty = float(nr[0]["close"]) if nr else 0.0
+# Try HMM regime first, fall back to price-based
+hmm_rows = qdb(
+    "SELECT regime, bull_prob, bear_prob, sideways_prob"
+    " FROM hmm_regime_daily ORDER BY date DESC LIMIT 1"
+)
+if hmm_rows:
+    regime     = hmm_rows[0]["regime"]
+    bull_p     = hmm_rows[0]["bull_prob"]
+    bear_p     = hmm_rows[0]["bear_prob"]
+else:
+    regime = "BULLISH" if nifty > 22000 else "SIDEWAYS" if nifty > 18000 else "BEARISH" if nifty > 0 else "UNKNOWN"
+    bull_p = bear_p = None
 
 report = {
     "agent":        "fusion",
@@ -164,6 +175,8 @@ report = {
     "meta": {
         "total_picks":  len(picks),
         "regime":       regime,
+        "bull_prob":    bull_p,
+        "bear_prob":    bear_p,
         "nifty":        round(nifty, 2),
         "agents_run":   sum(1 for v in agent_status.values() if v > 0),
         "agent_status": agent_status,

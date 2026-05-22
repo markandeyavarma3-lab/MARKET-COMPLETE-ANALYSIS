@@ -1,568 +1,256 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
 import NavBar from "@/components/NavBar";
+import { useEffect, useState } from "react";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
 interface Pick {
-  symbol:           string;
-  total_score:      number;
-  n_layers:         number;
-  layers_fired:     string[] | string;
-  reasons:          string[] | string;
-  beta_score:       number;
-  regime_score:     number;
-  insider_score:    number;
-  watchlist_score:  number;
-  seasonal_score:   number;
-  conviction_score: number;
-  quant_score:      number;
-  rsi_14:           number | null;
-  adx_14:           number | null;
-  atr_pct:          number | null;
-  pct_52h:          number | null;
-  macd_bull:        boolean;
-  price:            number | null;
-  today_pat:        { direction: string; mean_ret: number; win_pct: number; window_days: number } | null;
+  symbol: string; n_layers: number; layers_fired: string[];
+  reasons: string[]; beta_score: number; regime_score: number;
+  insider_score: number; watchlist_score: number;
+  seasonal_score: number; conviction_score: number; quant_score: number;
+}
+interface FusionData {
+  picks: Pick[]; date?: string; generated_at?: string;
+  meta?: { regime: string; nifty: number; total_picks: number;
+           bull_prob?: number; bear_prob?: number; agents_run?: number };
 }
 
-interface Resp {
-  picks:       Pick[];
-  meta:        any;
-  report_date: string | null;
-  regime:      string;
-  nifty:       number;
-  n_total:     number;
-  error?:      string;
-  generated_at:string;
-}
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const fn = (v: number | null, dec = 2) =>
-  v == null ? "--" : v.toLocaleString("en-IN", { maximumFractionDigits: dec });
-
-const scoreColor = (s: number) =>
-  s >= 6 ? "var(--bull)" : s >= 4 ? "var(--accent)" : s >= 2 ? "var(--warn)" : "var(--dim)";
-
-const LAYERS = [
-  { k: "beta",       label: "Beta",       color: "var(--info)"   },
-  { k: "regime",     label: "Regime",     color: "var(--warn)"   },
-  { k: "insider",    label: "Insider",    color: "var(--bear)"   },
-  { k: "watchlist",  label: "Watch",      color: "#a371f7"       },
-  { k: "seasonal",   label: "Seasonal",   color: "var(--bull)"   },
-  { k: "conviction", label: "Conviction", color: "var(--accent)" },
-  { k: "quant",      label: "Quant",      color: "#ffa657"       },
+const LAYER_DEFS: { key: keyof Pick; label: string; color: string; desc: string }[] = [
+  { key: "beta_score",       label: "BETA",       color: "var(--accent)", desc: "Momentum screens" },
+  { key: "regime_score",     label: "REGIME",     color: "var(--info)",   desc: "Macro/Alpha signals" },
+  { key: "insider_score",    label: "INSIDER",    color: "var(--warn)",   desc: "Corporate events/insider" },
+  { key: "watchlist_score",  label: "WATCHLIST",  color: "#a78bfa",       desc: "Manual watchlist" },
+  { key: "seasonal_score",   label: "SEASONAL",   color: "var(--bull)",   desc: "Engine seasonality" },
+  { key: "conviction_score", label: "CONVICTION", color: "#f472b6",       desc: "FII/DII flows" },
+  { key: "quant_score",      label: "QUANT",      color: "#34d399",       desc: "Options/GEX/Global" },
 ];
 
-function parseLayers(raw: string[] | string): string[] {
-  if (!raw) return [];
-  if (Array.isArray(raw)) return raw.map(l => String(l).toLowerCase());
-  return String(raw).toLowerCase().split(/[,|;\s]+/).filter(Boolean);
+function regimeColor(r: string) {
+  if (!r) return "var(--dim)";
+  r = r.toUpperCase();
+  if (r === "BULL" || r === "BULLISH") return "var(--bull)";
+  if (r === "BEAR" || r === "BEARISH") return "var(--bear)";
+  return "var(--warn)";
 }
 
-function parseReasons(raw: string[] | string): string[] {
-  if (!raw) return [];
-  if (Array.isArray(raw)) return raw.map(String);
-  return [String(raw)];
-}
-
-// ── Sub-components ────────────────────────────────────────────────────────────
-function ScoreBar({ score, max = 7 }: { score: number; max?: number }) {
-  const pct = Math.min(100, Math.round((score / max) * 100));
-  const col = scoreColor(score);
+function LayerBar({ score, color, label }: { score: number; color: string; label: string }) {
+  const pct = Math.round(score * 100);
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <div style={{ width: 60, height: 5, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
-        <div style={{ width: `${pct}%`, height: "100%", background: col, borderRadius: 2 }} />
+    <div style={{ marginBottom: 6 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 2 }}>
+        <span style={{ fontSize: 9, color: "var(--dim)", letterSpacing: 1 }}>{label}</span>
+        <span style={{ fontSize: 9, color: score > 0 ? color : "var(--muted)" }}>
+          {score > 0 ? "HIT" : "miss"}
+        </span>
       </div>
-      <span style={{ fontFamily: "monospace", fontSize: 12, color: col, fontWeight: 700, minWidth: 24 }}>
-        {score.toFixed(1)}
-      </span>
+      <div style={{ height: 4, background: "var(--bg)", borderRadius: 2 }}>
+        <div style={{ height: "100%", width: pct + "%", background: color,
+          borderRadius: 2, transition: "width 0.3s ease" }} />
+      </div>
     </div>
   );
 }
 
-function LayerDots({ fired, scores }: { fired: string[]; scores: Record<string, number> }) {
+function PickCard({ p, expanded, onToggle }: {
+  p: Pick; expanded: boolean; onToggle: () => void;
+}) {
+  const S: Record<string, React.CSSProperties> = {
+    card:  { background: "var(--surface)", border: "1px solid var(--border)",
+             borderRadius: 8, marginBottom: 8, overflow: "hidden" },
+    header:{ display: "flex", alignItems: "center", gap: 12, padding: "10px 16px",
+             cursor: "pointer", userSelect: "none" },
+    sym:   { fontSize: 14, fontWeight: 700, color: "var(--accent)", width: 120 },
+    badge: { fontSize: 10, padding: "2px 8px", borderRadius: 3,
+             background: "var(--accent)22", color: "var(--accent)" },
+    layers:{ display: "flex", gap: 4, flex: 1, flexWrap: "wrap" as const },
+    ltag:  { fontSize: 9, padding: "2px 6px", borderRadius: 3,
+             background: "var(--bg)", border: "1px solid var(--border)", color: "var(--dim)" },
+    body:  { padding: "0 16px 16px", borderTop: "1px solid var(--border)" },
+    grid:  { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px", marginTop: 12 },
+    reas:  { marginTop: 12 },
+    rtitle:{ fontSize: 10, color: "var(--dim)", letterSpacing: 1, marginBottom: 6 },
+    ritem: { fontSize: 11, color: "var(--text)", lineHeight: 1.7,
+             borderBottom: "1px solid var(--border)", paddingBottom: 3, marginBottom: 3 },
+  };
   return (
-    <div style={{ display: "flex", gap: 3 }}>
-      {LAYERS.map(({ k, label, color }) => {
-        const on = fired.some(f => f.includes(k.slice(0, 4)));
-        return (
-          <div key={k} title={`${label}${scores[k] ? `: ${scores[k].toFixed(1)}` : ""}`} style={{
-            width: 14, height: 14, borderRadius: "50%", fontSize: 8,
-            fontFamily: "monospace", fontWeight: 700,
-            background: on ? color : "var(--border)",
-            color: on ? "#000" : "var(--muted)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            {k[0].toUpperCase()}
+    <div style={S.card}>
+      <div style={S.header} onClick={onToggle}>
+        <span style={S.sym}>{p.symbol}</span>
+        <span style={S.badge}>{p.n_layers}L</span>
+        <div style={S.layers}>
+          {p.layers_fired.map(l => (
+            <span key={l} style={S.ltag}>{l.slice(0, 3).toUpperCase()}</span>
+          ))}
+        </div>
+        <span style={{ fontSize: 12, color: "var(--dim)" }}>{expanded ? "[-]" : "[+]"}</span>
+      </div>
+      {expanded && (
+        <div style={S.body}>
+          <div style={S.grid}>
+            <div>
+              <div style={{ fontSize: 10, color: "var(--dim)", letterSpacing: 1, marginBottom: 8, marginTop: 12 }}>
+                LAYER SCORES
+              </div>
+              {LAYER_DEFS.map(l => (
+                <LayerBar key={l.key} score={Number(p[l.key]) || 0}
+                  color={l.color} label={l.label} />
+              ))}
+            </div>
+            <div>
+              <div style={S.reas}>
+                <div style={S.rtitle}>SIGNAL REASONS</div>
+                {p.reasons.map((r, i) => (
+                  <div key={i} style={S.ritem}>{r}</div>
+                ))}
+                {p.reasons.length === 0 && (
+                  <div style={{ color: "var(--muted)", fontSize: 11 }}>No reasons logged</div>
+                )}
+              </div>
+            </div>
           </div>
-        );
-      })}
+        </div>
+      )}
     </div>
   );
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
 export default function FusionPage() {
-  const [data,       setData]       = useState<Resp | null>(null);
-  const [loading,    setLoading]    = useState(true);
-  const [search,     setSearch]     = useState("");
-  const [minLayers,  setMinLayers]  = useState(0);
-  const [sortBy,     setSortBy]     = useState<keyof Pick>("total_score");
-  const [sortAsc,    setSortAsc]    = useState(false);
-  const [showLayers, setShowLayers] = useState(false);
-  const [expanded,   setExpanded]   = useState<string | null>(null);
+  const [data, setData]     = useState<FusionData | null>(null);
+  const [loading, setL]     = useState(true);
+  const [error, setE]       = useState("");
+  const [search, setSrch]   = useState("");
+  const [minL, setMinL]     = useState(2);
+  const [expanded, setExp]  = useState<Set<string>>(new Set());
+  const [expandAll, setAll] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     fetch("/api/fusion")
       .then(r => r.json())
-      .then((d: Resp) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then(d => { setData(d); setL(false); })
+      .catch(e => { setE(e.message); setL(false); });
   }, []);
 
-  const rows = useMemo(() => {
-    if (!data?.picks) return [];
-    let r = [...data.picks];
-    if (search) { const q = search.toUpperCase(); r = r.filter(x => x.symbol.includes(q)); }
-    if (minLayers > 0) r = r.filter(x => x.n_layers >= minLayers);
-    const m = sortAsc ? 1 : -1;
-    return r.sort((a, b) => {
-      const av = (a as any)[sortBy], bv = (b as any)[sortBy];
-      return typeof av === "string" ? m * av.localeCompare(bv) : m * ((+av || 0) - (+bv || 0));
-    });
-  }, [data, search, minLayers, sortBy, sortAsc]);
+  const S: Record<string, React.CSSProperties> = {
+    page:  { minHeight: "100vh", background: "var(--bg)", fontFamily: "JetBrains Mono, monospace" },
+    sub:   { position: "sticky", top: 48, zIndex: 90, background: "var(--surface)",
+             borderBottom: "1px solid var(--border)", padding: "6px 20px",
+             display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" as const },
+    stitle:{ fontSize: 10, color: "var(--dim)", letterSpacing: 2 },
+    wrap:  { maxWidth: 1400, margin: "0 auto", padding: "16px 20px" },
+    kv:    { background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 6,
+             padding: "10px 16px", display: "inline-block", marginRight: 10, marginBottom: 12 },
+    kvk:   { fontSize: 10, color: "var(--dim)", letterSpacing: 1 },
+    kvv:   { fontSize: 18, fontWeight: 700, marginTop: 2 },
+    input: { background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 4,
+             padding: "4px 10px", fontSize: 11, color: "var(--text)", outline: "none" },
+    btn:   (active: boolean): React.CSSProperties => ({
+      padding: "4px 12px", fontSize: 10, letterSpacing: 1, cursor: "pointer",
+      border: "1px solid " + (active ? "var(--accent)" : "var(--border)"),
+      borderRadius: 4, background: active ? "var(--accent)22" : "transparent",
+      color: active ? "var(--accent)" : "var(--dim)",
+    }),
+  };
 
-  function Th({ col, label, right }: { col: keyof Pick; label: string; right?: boolean }) {
-    const active = sortBy === col;
-    return (
-      <th onClick={() => { if (sortBy === col) setSortAsc(a => !a); else { setSortBy(col); setSortAsc(false); } }}
-        style={{
-          padding: "8px 10px", cursor: "pointer", userSelect: "none",
-          textAlign: right ? "right" : "left",
-          color: active ? "var(--accent)" : "var(--dim)",
-          fontFamily: "monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
-          background: "var(--surface)",
-          borderBottom: `2px solid ${active ? "var(--accent)" : "var(--border)"}`,
-          whiteSpace: "nowrap",
-        }}>
-        {label}{active ? (sortAsc ? " ^" : " v") : ""}
-      </th>
-    );
+  const picks = (data?.picks || [])
+    .filter(p => p.n_layers >= minL)
+    .filter(p => !search || p.symbol.toLowerCase().includes(search.toLowerCase()));
+
+  const regime = data?.meta?.regime || "--";
+  const nifty  = data?.meta?.nifty;
+  const bullP  = data?.meta?.bull_prob;
+  const bearP  = data?.meta?.bear_prob;
+
+  function toggleAll() {
+    if (expandAll) {
+      setExp(new Set());
+      setAll(false);
+    } else {
+      setExp(new Set(picks.map(p => p.symbol)));
+      setAll(true);
+    }
   }
 
-  const rc = data?.regime === "BULLISH" ? "var(--bull)" :
-             data?.regime === "BEARISH" ? "var(--bear)" : "var(--warn)";
+  function toggleOne(sym: string) {
+    setExp(prev => {
+      const next = new Set(prev);
+      if (next.has(sym)) next.delete(sym);
+      else next.add(sym);
+      return next;
+    });
+  }
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
+    <div style={S.page}>
       <NavBar />
-
-      {/* Sub-header */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "6px 20px", borderBottom: "1px solid var(--border)", background: "var(--surface)",
-      }}>
-        <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>
-          Fusion Agent -- Cross-agent top picks
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          {data?.report_date && (
-            <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>
-              Report: {data.report_date.slice(0, 10)}
-            </span>
-          )}
-          <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>
-            {data ? new Date(data.generated_at).toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" }) + " IST" : ""}
+      <div style={S.sub}>
+        <span style={S.stitle}>FUSION  /  MULTI-LAYER SIGNAL PICKS</span>
+        <input style={S.input} placeholder="search symbol..."
+          value={search} onChange={e => setSrch(e.target.value)} />
+        {[2,3,4,5].map(n => (
+          <button key={n} style={S.btn(minL === n)} onClick={() => setMinL(n)}>
+            {n}L+
+          </button>
+        ))}
+        <button style={S.btn(expandAll)} onClick={toggleAll}>
+          {expandAll ? "COLLAPSE ALL" : "EXPAND ALL"}
+        </button>
+        {data?.generated_at && (
+          <span style={{ fontSize: 10, color: "var(--dim)", marginLeft: "auto" }}>
+            {data.generated_at}
           </span>
-        </div>
+        )}
       </div>
 
-      <div style={{ padding: "14px 20px", maxWidth: 1500, margin: "0 auto" }}>
+      <div style={S.wrap}>
+        {loading && <div style={{ color: "var(--dim)", padding: 40, textAlign: "center" }}>Loading fusion picks...</div>}
+        {error   && <div style={{ color: "var(--bear)", padding: 20 }}>Error: {error}</div>}
 
-        {/* Header row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", marginBottom: 14 }}>
-          <div>
-            <div style={{ fontFamily: "monospace", fontSize: 16, fontWeight: 700,
-                          letterSpacing: "0.12em", color: "var(--accent)" }}>
-              FUSION PICKS
+        {data && <>
+          {/* Regime + stats banner */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
+            <div style={S.kv}>
+              <div style={S.kvk}>REGIME (HMM)</div>
+              <div style={{ ...S.kvv, color: regimeColor(regime) }}>{regime}</div>
             </div>
-            <div style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)", marginTop: 2 }}>
-              {rows.length} picks shown{data ? ` / ${data.n_total} total` : ""}
-            </div>
-          </div>
-
-          {/* Regime */}
-          <div style={{ padding: "5px 12px", background: "var(--surface)",
-                        border: `1px solid ${rc}`, borderRadius: 4 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 8, color: "var(--dim)", letterSpacing: "0.1em" }}>REGIME</div>
-            <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: rc }}>
-              {data?.regime ?? "--"}
-            </div>
-          </div>
-
-          {/* Nifty */}
-          <div style={{ padding: "5px 12px", background: "var(--surface)",
-                        border: "1px solid var(--border)", borderRadius: 4 }}>
-            <div style={{ fontFamily: "monospace", fontSize: 8, color: "var(--dim)" }}>NIFTY 50</div>
-            <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: "var(--text)" }}>
-              {fn(data?.nifty ?? null, 0)}
+            {nifty != null && <div style={S.kv}>
+              <div style={S.kvk}>NIFTY 50</div>
+              <div style={S.kvv}>{Number(nifty).toLocaleString("en-IN")}</div>
+            </div>}
+            {bullP != null && <div style={S.kv}>
+              <div style={S.kvk}>BULL PROB</div>
+              <div style={{ ...S.kvv, color: "var(--bull)" }}>{(bullP * 100).toFixed(0)}%</div>
+            </div>}
+            {bearP != null && <div style={S.kv}>
+              <div style={S.kvk}>BEAR PROB</div>
+              <div style={{ ...S.kvv, color: "var(--bear)" }}>{(bearP * 100).toFixed(0)}%</div>
+            </div>}
+            <div style={S.kv}>
+              <div style={S.kvk}>PICKS ({minL}L+)</div>
+              <div style={S.kvv}>{picks.length}</div>
             </div>
           </div>
 
-          {/* Meta stats from fusion report */}
-          {data?.meta && typeof data.meta === "object" && Object.entries(data.meta).slice(0, 4).map(([k, v]) => (
-            <div key={k} style={{ padding: "5px 12px", background: "var(--surface)",
-                                   border: "1px solid var(--border)", borderRadius: 4 }}>
-              <div style={{ fontFamily: "monospace", fontSize: 8, color: "var(--dim)", letterSpacing: "0.08em" }}>
-                {k.replace(/_/g, " ").toUpperCase()}
-              </div>
-              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, color: "var(--text)" }}>
-                {String(v)}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Layer legend */}
-        <div style={{ display: "flex", gap: 14, marginBottom: 12, flexWrap: "wrap" }}>
-          {LAYERS.map(({ k, label, color }) => (
-            <div key={k} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <div style={{ width: 9, height: 9, borderRadius: "50%", background: color }} />
-              <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>
-                {k[0].toUpperCase()}={label}
+          {/* Layer legend */}
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+            {LAYER_DEFS.map(l => (
+              <span key={l.key} style={{ fontSize: 9, padding: "2px 8px", borderRadius: 3,
+                border: "1px solid " + l.color + "44", color: l.color }}>
+                {l.label}  {l.desc}
               </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Controls */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12, alignItems: "center" }}>
-          <input value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Symbol..."
-            style={{ background: "var(--surface)", border: "1px solid var(--border)",
-                     borderRadius: 4, color: "var(--text)", fontFamily: "monospace",
-                     fontSize: 12, padding: "5px 10px", width: 130, outline: "none" }} />
-
-          <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>MIN LAYERS</span>
-          {[0, 2, 3, 4, 5].map(v => (
-            <button key={v} onClick={() => setMinLayers(v)} style={{
-              padding: "4px 9px", fontFamily: "monospace", fontSize: 10, cursor: "pointer", borderRadius: 4,
-              background: minLayers === v ? "var(--accent)" : "var(--surface)",
-              color:      minLayers === v ? "#000" : "var(--dim)",
-              border:     `1px solid ${minLayers === v ? "var(--accent)" : "var(--border)"}`,
-            }}>{v === 0 ? "ALL" : `${v}+`}</button>
-          ))}
-
-          <button onClick={() => setShowLayers(v => !v)} style={{
-            marginLeft: "auto", padding: "4px 10px", fontFamily: "monospace", fontSize: 10,
-            cursor: "pointer", borderRadius: 4,
-            background: showLayers ? "var(--accent)" : "var(--surface)",
-            color:      showLayers ? "#000" : "var(--dim)",
-            border:     `1px solid ${showLayers ? "var(--accent)" : "var(--border)"}`,
-          }}>
-            {showLayers ? "HIDE LAYERS" : "SHOW LAYERS"}
-          </button>
-        </div>
-
-        {/* Error */}
-        {data?.error && (
-          <div style={{ padding: "10px 14px", background: "rgba(248,81,73,0.08)",
-                        border: "1px solid var(--bear)", borderRadius: 4,
-                        fontFamily: "monospace", fontSize: 11, color: "var(--bear)", marginBottom: 12 }}>
-            {data.error}
-          </div>
-        )}
-
-        {/* Table */}
-        {loading ? (
-          <div style={{ padding: 60, textAlign: "center", fontFamily: "monospace",
-                        fontSize: 12, color: "var(--dim)" }}>Loading fusion picks...</div>
-        ) : (
-          <div style={{ borderRadius: 6, border: "1px solid var(--border)", overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th style={{ padding: "8px 10px", background: "var(--surface)", width: 30,
-                                borderBottom: "2px solid var(--border)",
-                                fontFamily: "monospace", fontSize: 10, color: "var(--dim)", textAlign: "left" }}>#</th>
-                  <Th col="symbol"      label="SYMBOL" />
-                  <Th col="total_score" label="SCORE" />
-                  <th style={{ padding: "8px 10px", background: "var(--surface)",
-                                borderBottom: "2px solid var(--border)",
-                                fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>LAYERS</th>
-                  {showLayers && <>
-                    <Th col="beta_score"       label="BETA"  right />
-                    <Th col="regime_score"     label="RGM"   right />
-                    <Th col="insider_score"    label="INS"   right />
-                    <Th col="watchlist_score"  label="WTCH"  right />
-                    <Th col="seasonal_score"   label="SEAS"  right />
-                    <Th col="conviction_score" label="CONV"  right />
-                    <Th col="quant_score"      label="QANT"  right />
-                  </>}
-                  <Th col="n_layers" label="N" right />
-                  <Th col="rsi_14"   label="RSI"  right />
-                  <Th col="adx_14"   label="ADX"  right />
-                  <th style={{ padding: "8px 10px", background: "var(--surface)",
-                                borderBottom: "2px solid var(--border)",
-                                fontFamily: "monospace", fontSize: 10, color: "var(--dim)",
-                                textAlign: "center" }}>MACD</th>
-                  <th style={{ padding: "8px 10px", background: "var(--surface)",
-                                borderBottom: "2px solid var(--border)",
-                                fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>TODAY PAT</th>
-                  <Th col="price" label="PRICE" right />
-                  <th style={{ padding: "8px 10px", background: "var(--surface)",
-                                borderBottom: "2px solid var(--border)",
-                                fontFamily: "monospace", fontSize: 10, color: "var(--dim)" }}>REASONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, i) => {
-                  const fired   = parseLayers(row.layers_fired);
-                  const reasons = parseReasons(row.reasons);
-                  const scores  = {
-                    beta: row.beta_score, regime: row.regime_score,
-                    insider: row.insider_score, watchlist: row.watchlist_score,
-                    seasonal: row.seasonal_score, conviction: row.conviction_score,
-                    quant: row.quant_score,
-                  };
-                  const rsiC  = row.rsi_14 == null ? "var(--dim)"
-                              : row.rsi_14 > 70 ? "var(--bear)"
-                              : row.rsi_14 < 30 ? "var(--bull)" : "var(--text)";
-                  const isExp = expanded === row.symbol;
-
-                  return (
-                    <>
-                      <tr key={row.symbol}
-                        onClick={() => setExpanded(isExp ? null : row.symbol)}
-                        style={{
-                          borderBottom: isExp ? "none" : "1px solid var(--border)",
-                          cursor: "pointer",
-                          background: isExp ? "rgba(0,212,170,0.04)" : "transparent",
-                        }}
-                        onMouseEnter={e => { if (!isExp) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)"; }}
-                        onMouseLeave={e => { if (!isExp) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
-
-                        {/* # */}
-                        <td style={{ padding: "7px 10px", fontFamily: "monospace", fontSize: 11, color: "var(--dim)" }}>
-                          {i + 1}
-                        </td>
-
-                        {/* Symbol */}
-                        <td style={{ padding: "7px 10px" }}>
-                          <a href={`/stocks/${row.symbol}`}
-                            onClick={e => e.stopPropagation()}
-                            style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700,
-                                     color: "var(--text)", textDecoration: "none" }}>
-                            {row.symbol}
-                          </a>
-                        </td>
-
-                        {/* Score */}
-                        <td style={{ padding: "7px 10px" }}>
-                          <ScoreBar score={row.total_score} />
-                        </td>
-
-                        {/* Layer dots */}
-                        <td style={{ padding: "7px 10px" }}>
-                          <LayerDots fired={fired} scores={scores} />
-                        </td>
-
-                        {/* Per-layer cols */}
-                        {showLayers && (
-                          <>
-                            {(["beta_score","regime_score","insider_score",
-                               "watchlist_score","seasonal_score","conviction_score",
-                               "quant_score"] as (keyof Pick)[]).map(k => {
-                              const v = row[k] as number;
-                              return (
-                                <td key={k} style={{ padding: "7px 10px", textAlign: "right",
-                                                     fontFamily: "monospace", fontSize: 11 }}>
-                                  {v > 0
-                                    ? <span style={{ color: scoreColor(v) }}>{v.toFixed(1)}</span>
-                                    : <span style={{ color: "var(--border)" }}>--</span>}
-                                </td>
-                              );
-                            })}
-                          </>
-                        )}
-
-                        {/* N layers */}
-                        <td style={{ padding: "7px 10px", textAlign: "right",
-                                     fontFamily: "monospace", fontSize: 12,
-                                     color: row.n_layers >= 5 ? "var(--bull)"
-                                          : row.n_layers >= 3 ? "var(--warn)" : "var(--dim)" }}>
-                          {row.n_layers}
-                        </td>
-
-                        {/* RSI */}
-                        <td style={{ padding: "7px 10px", textAlign: "right",
-                                     fontFamily: "monospace", fontSize: 12, color: rsiC }}>
-                          {row.rsi_14 != null ? row.rsi_14.toFixed(0) : "--"}
-                        </td>
-
-                        {/* ADX */}
-                        <td style={{ padding: "7px 10px", textAlign: "right",
-                                     fontFamily: "monospace", fontSize: 12,
-                                     color: (row.adx_14 ?? 0) > 25 ? "var(--bull)" : "var(--dim)" }}>
-                          {row.adx_14 != null ? row.adx_14.toFixed(0) : "--"}
-                        </td>
-
-                        {/* MACD */}
-                        <td style={{ padding: "7px 10px", textAlign: "center" }}>
-                          <span style={{ fontFamily: "monospace", fontSize: 10, padding: "2px 6px", borderRadius: 3,
-                                         background: row.macd_bull ? "rgba(38,196,133,0.12)" : "rgba(248,81,73,0.12)",
-                                         color: row.macd_bull ? "var(--bull)" : "var(--bear)" }}>
-                            {row.macd_bull ? "BULL" : "BEAR"}
-                          </span>
-                        </td>
-
-                        {/* Today pattern */}
-                        <td style={{ padding: "7px 10px", minWidth: 120 }}>
-                          {row.today_pat ? (
-                            <span style={{ fontFamily: "monospace", fontSize: 10 }}>
-                              <span style={{ color: row.today_pat.direction === "UP" ? "var(--bull)" : "var(--bear)",
-                                             fontWeight: 700, marginRight: 3 }}>
-                                {row.today_pat.direction}
-                              </span>
-                              <span style={{ color: row.today_pat.mean_ret > 0 ? "var(--bull)" : "var(--bear)" }}>
-                                {row.today_pat.mean_ret > 0 ? "+" : ""}{row.today_pat.mean_ret}%
-                              </span>
-                              <span style={{ color: "var(--dim)" }}> {row.today_pat.win_pct}%w</span>
-                            </span>
-                          ) : (
-                            <span style={{ color: "var(--border)", fontFamily: "monospace", fontSize: 10 }}>--</span>
-                          )}
-                        </td>
-
-                        {/* Price */}
-                        <td style={{ padding: "7px 10px", textAlign: "right",
-                                     fontFamily: "monospace", fontSize: 12, color: "var(--text)" }}>
-                          {fn(row.price, 2)}
-                        </td>
-
-                        {/* Reasons (truncated) */}
-                        <td style={{ padding: "7px 10px", maxWidth: 220 }}>
-                          <div style={{ fontFamily: "monospace", fontSize: 10, color: "var(--dim)",
-                                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                            {reasons.slice(0, 2).join(" | ")}
-                            {reasons.length > 2 && <span style={{ color: "var(--muted)" }}> +{reasons.length - 2}</span>}
-                          </div>
-                        </td>
-                      </tr>
-
-                      {/* Expanded row: full reasons + all layer scores */}
-                      {isExp && (
-                        <tr key={`${row.symbol}-exp`}
-                          style={{ borderBottom: "1px solid var(--border)", background: "rgba(0,212,170,0.04)" }}>
-                          <td colSpan={99} style={{ padding: "8px 20px 14px 44px" }}>
-                            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-
-                              {/* All reasons */}
-                              <div style={{ minWidth: 280 }}>
-                                <div style={{ fontFamily: "monospace", fontSize: 9, color: "var(--dim)",
-                                              letterSpacing: "0.1em", marginBottom: 6 }}>REASONS</div>
-                                {reasons.length > 0 ? reasons.map((r, idx) => (
-                                  <div key={idx} style={{ fontFamily: "monospace", fontSize: 11,
-                                                           color: "var(--text)", marginBottom: 3 }}>
-                                    <span style={{ color: "var(--accent)", marginRight: 6 }}>{idx + 1}.</span>
-                                    {r}
-                                  </div>
-                                )) : (
-                                  <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--dim)" }}>
-                                    No reasons recorded
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* Layer breakdown */}
-                              <div>
-                                <div style={{ fontFamily: "monospace", fontSize: 9, color: "var(--dim)",
-                                              letterSpacing: "0.1em", marginBottom: 6 }}>LAYER SCORES</div>
-                                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                                  {LAYERS.map(({ k, label, color }) => {
-                                    const v = (scores as any)[k] as number;
-                                    const on = fired.some(f => f.includes(k.slice(0, 4)));
-                                    return (
-                                      <div key={k} style={{
-                                        padding: "4px 10px", borderRadius: 4,
-                                        background: on ? `${color}18` : "var(--surface)",
-                                        border: `1px solid ${on ? color : "var(--border)"}`,
-                                      }}>
-                                        <div style={{ fontFamily: "monospace", fontSize: 8,
-                                                       color: on ? color : "var(--dim)",
-                                                       letterSpacing: "0.08em" }}>{label.toUpperCase()}</div>
-                                        <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700,
-                                                       color: on ? color : "var(--muted)" }}>
-                                          {v > 0 ? v.toFixed(1) : "--"}
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-
-                              {/* Technicals */}
-                              <div>
-                                <div style={{ fontFamily: "monospace", fontSize: 9, color: "var(--dim)",
-                                              letterSpacing: "0.1em", marginBottom: 6 }}>TECHNICALS</div>
-                                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                                  {[
-                                    { l: "RSI",     v: row.rsi_14?.toFixed(0)  ?? "--", c: row.rsi_14 && row.rsi_14 < 30 ? "var(--bull)" : row.rsi_14 && row.rsi_14 > 70 ? "var(--bear)" : "var(--text)" },
-                                    { l: "ADX",     v: row.adx_14?.toFixed(0)  ?? "--", c: (row.adx_14 ?? 0) > 25 ? "var(--bull)" : "var(--dim)" },
-                                    { l: "ATR%",    v: row.atr_pct?.toFixed(2) ?? "--", c: "var(--text)" },
-                                    { l: "52W HI%", v: row.pct_52h?.toFixed(1) ?? "--", c: (row.pct_52h ?? -99) > -5 ? "var(--bull)" : "var(--dim)" },
-                                    { l: "MACD",    v: row.macd_bull ? "BULL" : "BEAR", c: row.macd_bull ? "var(--bull)" : "var(--bear)" },
-                                  ].map(({ l, v, c }) => (
-                                    <div key={l} style={{ padding: "4px 10px", borderRadius: 4,
-                                                           background: "var(--surface)", border: "1px solid var(--border)" }}>
-                                      <div style={{ fontFamily: "monospace", fontSize: 8,
-                                                     color: "var(--dim)", letterSpacing: "0.08em" }}>{l}</div>
-                                      <div style={{ fontFamily: "monospace", fontSize: 13,
-                                                     fontWeight: 700, color: c }}>{v}</div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </>
-                  );
-                })}
-              </tbody>
-            </table>
-
-            {rows.length === 0 && !loading && (
-              <div style={{ padding: 40, textAlign: "center", fontFamily: "monospace",
-                            fontSize: 12, color: "var(--dim)" }}>
-                {data?.error ? "Run agent_fusion.py to generate picks." : "No picks match filters."}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Stats bar */}
-        {data && (
-          <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-            {([
-              ["TOTAL",    data.n_total],
-              ["SHOWING",  rows.length],
-              ["5+ LAYERS",data.picks.filter(p => p.n_layers >= 5).length],
-              ["3+ LAYERS",data.picks.filter(p => p.n_layers >= 3).length],
-              ["W/ PATTERN",data.picks.filter(p => p.today_pat != null).length],
-            ] as [string, number][]).map(([l, v]) => (
-              <div key={l} style={{ padding: "5px 12px", background: "var(--surface)",
-                                     border: "1px solid var(--border)", borderRadius: 4 }}>
-                <div style={{ fontFamily: "monospace", fontSize: 8, color: "var(--dim)",
-                               letterSpacing: "0.1em" }}>{l}</div>
-                <div style={{ fontFamily: "monospace", fontSize: 14, fontWeight: 700,
-                               color: "var(--accent)" }}>{v}</div>
-              </div>
             ))}
           </div>
-        )}
+
+          {/* Picks */}
+          {picks.length === 0 && (
+            <div style={{ color: "var(--dim)", padding: 40, textAlign: "center" }}>
+              No picks for {minL}L+ filter. Try 2L+.
+            </div>
+          )}
+          {picks.map(p => (
+            <PickCard key={p.symbol} p={p}
+              expanded={expanded.has(p.symbol)}
+              onToggle={() => toggleOne(p.symbol)} />
+          ))}
+        </>}
       </div>
     </div>
   );

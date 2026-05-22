@@ -9,9 +9,10 @@ PY   = sys.executable
 def ts(): return datetime.now().strftime('%H:%M:%S')
 def log(msg): print(f'  [{ts()}] {msg}', flush=True)
 
-def run_agent(script, timeout=120):
+def run_agent(script, timeout=120, extra_args=None):
     try:
-        r = subprocess.run([PY, str(DA / script)], cwd=str(DA),
+        cmd = [PY, str(DA / script)] + (extra_args or [])
+        r = subprocess.run(cmd, cwd=str(DA),
                            capture_output=True, text=True, timeout=timeout)
         return r.returncode == 0
     except Exception as e:
@@ -29,25 +30,28 @@ def send(msg):
 # ---- Data getters -------------------------------------------------------
 
 def get_global_snapshot():
-    # Map of what WE want to show -> possible DB names (order = priority)
+    # Flexible alias map: display_label -> list of possible DB names
     WANT = {
-        'Nifty 50 ':  ['NIFTY50','NIFTY 50','^NSEI','Nifty 50'],
-        'S&P 500  ':  ['SPX','S&P 500','^GSPC','SP500'],
-        'VIX      ':  ['VIX','^VIX','CBOE VIX'],
-        'IndiaVIX ':  ['IndiaVIX','INDIA VIX','India VIX','^INDIAVIX'],
-        'US 10Y   ':  ['US10Y','US 10Y','TNX','^TNX'],
-        'Gold     ':  ['Gold','GOLD','GC=F','XAU'],
-        'Crude WTI':  ['CrudeWTI','Crude WTI','WTI','CL=F'],
-        'USD/INR  ':  ['USDINR','USD/INR','USDINR=X'],
-        'Bitcoin  ':  ['Bitcoin','BITCOIN','BTC-USD','BTC'],
+        'Nifty 50 ':  ['NIFTY50','NIFTY 50','^NSEI','Nifty 50','NIFTY'],
+        'S&P 500  ':  ['SPX','S&P 500','^GSPC','SP500','S&P500'],
+        'Dow Jones':  ['DJI','Dow Jones','^DJI','DJIA'],
+        'Nasdaq   ':  ['NDX','Nasdaq','^NDX','^IXIC','NASDAQ'],
+        'VIX      ':  ['VIX','^VIX','CBOE VIX','CBOE Volatility Index'],
+        'IndiaVIX ':  ['IndiaVIX','INDIA VIX','India VIX','^INDIAVIX','INDIAVIX'],
+        'US 10Y   ':  ['US10Y','US 10Y','TNX','^TNX','US 10-Yr'],
+        'Gold     ':  ['Gold','GOLD','GC=F','XAU','Gold Futures'],
+        'Crude WTI':  ['CrudeWTI','Crude WTI','WTI','CL=F','Crude Oil WTI'],
+        'USD/INR  ':  ['USDINR','USD/INR','USDINR=X','USD-INR'],
+        'Bitcoin  ':  ['Bitcoin','BITCOIN','BTC-USD','BTC','BTC/USD'],
+        'Nikkei   ':  ['Nikkei','NIKKEI','^N225','Nikkei 225'],
+        'DAX      ':  ['DAX','^GDAXI','DAX Index'],
+        'SGX Nifty':  ['SGXNifty','SGX Nifty','SGXNIFTY'],
     }
     try:
         conn = sqlite3.connect(DB_P, timeout=10)
-        # Get all available symbols
         avail = {r[0] for r in conn.execute(
             'SELECT DISTINCT symbol FROM global_indices_daily'
         ).fetchall()}
-        # Build query list: for each label find first matching DB symbol
         to_query = {}  # label -> db_symbol
         for label, candidates in WANT.items():
             for c in candidates:
@@ -55,7 +59,7 @@ def get_global_snapshot():
                     to_query[label] = c
                     break
         if not to_query:
-            log(f'global_snapshot: no symbols matched. DB has: {sorted(avail)[:10]}')
+            log(f'global_snapshot: 0 matches. DB has: {sorted(avail)[:15]}')
             conn.close(); return []
         syms = list(to_query.values())
         ph   = ','.join('?'*len(syms))
@@ -75,7 +79,7 @@ def get_global_snapshot():
             ico   = 'UP' if (chg or 0) > 0.3 else 'DN' if (chg or 0) < -0.3 else '--'
             chg_s = f'{chg:+.2f}%' if chg is not None else ''
             result.append(f'  {ico} `{label}` {close:,.2f}  {chg_s}')
-        log(f'global_snapshot: {len(result)}/{len(WANT)} symbols found')
+        log(f'global_snapshot: {len(result)}/{len(to_query)} symbols found')
         return result
     except Exception as e:
         log(f'global_snapshot error: {e}')
@@ -192,8 +196,8 @@ def main():
     print('='*50)
 
     log('Running agents...')
-    for script in ['agent_fusion.py', 'agent_eta.py', 'agent_alert.py']:
-        ok = run_agent(script)
+    for script, tout, extra_args in [('agent_fusion.py',120,[]),("agent_eta.py",300,["--no-llm"]),("agent_alert.py",60,[])]:
+        ok = run_agent(script, timeout=tout, extra_args=extra_args)
         log(f'  {script}: {"OK" if ok else "FAILED"}')
 
     lines = [f'*MICC Morning Brief -- {today}*', '']
@@ -237,6 +241,13 @@ def main():
     # 4. Today's patterns (OOS-clean)
     mmdd, pats = get_todays_patterns(n=6)
     if pats:
+        # Dedup: one row per symbol, keep best score
+        seen = {}  
+        for row in pats:
+            s = row[0]
+            if s not in seen or float(row[5] or 0) > float(seen[s][5] or 0):
+                seen[s] = row
+        pats = list(seen.values())[:6]
         lines.append(f'*Seasonal Patterns ({mmdd}) [OOS-validated]:*')
         for sym, win, dirn, acc, mean, score in pats:
             ico  = 'UP' if str(dirn).upper() == 'UP' else 'DN'
