@@ -478,9 +478,6 @@ def run_eta(send: bool = False, no_llm: bool = False) -> dict:
     upcoming = screen_upcoming_results(ann)
     print(f"    {len(upcoming)} stocks with results due soon")
 
-    if no_llm:
-      llm_analysis = "[LLM skipped -- use --no-llm flag]"
-  else:
     print("  LLM analysis...")
     if no_llm:
         analysis = "[LLM skipped]"
@@ -496,7 +493,7 @@ def run_eta(send: bool = False, no_llm: bool = False) -> dict:
         "date":               today_str(),
         "timestamp":          now_ist(),
         "generated_at":       now_ist(),
-        # Original keys (kept for backward compat)
+        # Original keys (backward compat)
         "results_season":     results_season,
         "dividend_calendar":  dividends,
         "insider_cluster":    clusters,
@@ -504,14 +501,14 @@ def run_eta(send: bool = False, no_llm: bool = False) -> dict:
         "post_results_reaction": reactions,
         "upcoming_results":   upcoming,
         "analysis":           analysis,
-        # New keys matching /eta dashboard page expectations
-        "screen1_results_season":      results_season,
-        "screen2_dividends":            dividends,
-        "screen3_insider_clusters":     clusters,
-        "screen4_big_trades":           big_trades,
+        # New keys matching /eta dashboard page
+        "screen1_results_season":        results_season,
+        "screen2_dividends":             dividends,
+        "screen3_insider_clusters":      clusters,
+        "screen4_big_trades":            big_trades,
         "screen5_post_results_reaction": reactions,
-        "screen6_upcoming_results":     upcoming,
-        "llm_analysis":                analysis,
+        "screen6_upcoming_results":      upcoming,
+        "llm_analysis":                  analysis,
     }
 
     out = OUTPUT_DIR / "last_report.json"
@@ -523,7 +520,6 @@ def run_eta(send: bool = False, no_llm: bool = False) -> dict:
         ok  = send_telegram_chunks(msg)
         print(f"  Telegram: {'OK' if ok else 'FAILED'}")
 
-    # console summary
     print(f"\n  Results reported:      {len(results_season)}")
     print(f"  Corporate actions:     {len(dividends)}")
     print(f"  Insider clusters:      {len(clusters)}")
