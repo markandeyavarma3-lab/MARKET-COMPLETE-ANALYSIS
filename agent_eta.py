@@ -29,7 +29,6 @@ from pathlib import Path
 import pandas as pd
 
 import sys
-no_llm = "--no-llm" in sys.argv
 sys.path.insert(0, str(Path(__file__).parent))
 from micc_data import call_llm, now_ist, send_telegram_chunks
 
@@ -438,7 +437,7 @@ def format_telegram(report: dict) -> str:
 # MAIN
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_eta(send: bool = False) -> dict:
+def run_eta(send: bool = False, no_llm: bool = False) -> dict:
     print("=" * 55)
     print("  AGENT ETA -- Corporate Events Intelligence")
     print("=" * 55)
@@ -483,15 +482,21 @@ def run_eta(send: bool = False) -> dict:
       llm_analysis = "[LLM skipped -- use --no-llm flag]"
   else:
     print("  LLM analysis...")
-    prompt   = build_prompt(results_season, dividends, clusters,
-                             big_trades, reactions, upcoming)
-    analysis, _src = call_llm(prompt, max_tokens=600, label="Eta")
-    print(f"    {len(str(analysis))} chars")
+    if no_llm:
+        analysis = "[LLM skipped]"
+        print("    skipped (--no-llm)")
+    else:
+        prompt   = build_prompt(results_season, dividends, clusters,
+                                 big_trades, reactions, upcoming)
+        analysis, _src = call_llm(prompt, max_tokens=600, label="Eta")
+        print(f"    {len(str(analysis))} chars")
 
     report = {
         "agent":              "eta",
         "date":               today_str(),
+        "timestamp":          now_ist(),
         "generated_at":       now_ist(),
+        # Original keys (kept for backward compat)
         "results_season":     results_season,
         "dividend_calendar":  dividends,
         "insider_cluster":    clusters,
@@ -499,6 +504,14 @@ def run_eta(send: bool = False) -> dict:
         "post_results_reaction": reactions,
         "upcoming_results":   upcoming,
         "analysis":           analysis,
+        # New keys matching /eta dashboard page expectations
+        "screen1_results_season":      results_season,
+        "screen2_dividends":            dividends,
+        "screen3_insider_clusters":     clusters,
+        "screen4_big_trades":           big_trades,
+        "screen5_post_results_reaction": reactions,
+        "screen6_upcoming_results":     upcoming,
+        "llm_analysis":                analysis,
     }
 
     out = OUTPUT_DIR / "last_report.json"
@@ -522,6 +535,7 @@ def run_eta(send: bool = False) -> dict:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--send", action="store_true")
+    ap.add_argument("--send",   action="store_true")
+    ap.add_argument("--no-llm", action="store_true", dest="no_llm")
     args = ap.parse_args()
-    run_eta(send=args.send)
+    run_eta(send=args.send, no_llm=args.no_llm)

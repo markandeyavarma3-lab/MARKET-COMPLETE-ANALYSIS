@@ -65,7 +65,38 @@ export default function Home() {
 
       <div style={{ padding: "16px 20px", maxWidth: 1600, margin: "0 auto" }}>
         <div style={{ marginBottom: 14 }}>
-          <AlphaPanel data={reports.alpha ?? null} />
+          
+        {/* HMM Regime Banner */}
+        {regime && (
+          <div style={{
+            display: 'flex', gap: 16, alignItems: 'center',
+            padding: '10px 16px', marginBottom: 16,
+            background: 'var(--surface)', border: '1px solid var(--border)',
+            borderRadius: 8, fontSize: 12,
+          }}>
+            <span style={{ fontSize: 10, color: 'var(--dim)', letterSpacing: 1 }}>REGIME (HMM)</span>
+            <span style={{
+              fontWeight: 700, fontSize: 14,
+              color: regime.regime === 'BULL' ? 'var(--bull)'
+                   : regime.regime === 'BEAR' ? 'var(--bear)' : 'var(--warn)'
+            }}>
+              {regime.regime === 'BULL' ? 'UP' : regime.regime === 'BEAR' ? 'DN' : '--'}
+              {' '}{regime.regime}
+            </span>
+            <span style={{ fontSize: 11, color: 'var(--dim)' }}>
+              {(regime.confidence * 100).toFixed(0)}% conf
+            </span>
+            <span style={{ color: 'var(--bull)', fontSize: 11 }}>
+              Bull {(regime.bull_prob * 100).toFixed(0)}%
+            </span>
+            <span style={{ color: 'var(--bear)', fontSize: 11 }}>
+              Bear {(regime.bear_prob * 100).toFixed(0)}%
+            </span>
+            <a href='/fusion' style={{ marginLeft: 'auto', fontSize: 10,
+              color: 'var(--accent)', textDecoration: 'none' }}>VIEW FUSION ›</a>
+          </div>
+        )}
+        <AlphaPanel data={reports.alpha ?? null} />
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:14 }}>
           <BetaPanel  data={reports.beta  ?? null} />
